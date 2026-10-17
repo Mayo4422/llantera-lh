@@ -1,189 +1,135 @@
+
+/*Fondo principal*/
 .login-pagina {
   min-height: 100vh;
-  display: grid;
-  place-items: center;
-  padding: 16px;
-  background: #f4f4f5;
-  font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  color: #18181b;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f1f5f9;
+  font-family: Arial, sans-serif;
+  padding: 20px;
 }
 
+/*Tarjeta de inicio de sesión*/
 .login-tarjeta {
   width: 100%;
-  max-width: 360px;
-  background: #ffffff;
-  border: 1px solid #e4e4e7;
-  border-radius: 6px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
-  padding: 28px 28px 22px;
+  max-width: 420px;
+  background: white;
+  padding: 40px 35px;
+  border-radius: 12px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
 }
 
+/*Logo*/
 .login-logo {
-  width: 48px;
-  height: 48px;
-  margin: 0 auto 12px;
-  border-radius: 8px;
-  background: #18181b;
-  color: #ffffff;
-  display: grid;
-  place-items: center;
+  width: 55px;
+  height: 55px;
+  margin: 0 auto 18px;
+  border-radius: 50%;
+  background: #1e3a5f;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: bold;
 }
 
+/*Empresa*/
 .login-empresa {
+  font-size: 22px;
+  text-align: center;
+  color: #1e293b;
   margin: 0;
-  font-size: 17px;
-  font-weight: 600;
-  text-align: center;
 }
 
+/*Descripción*/
 .login-area {
-  margin: 2px 0 18px;
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  text-align: center;
-  color: #52525b;
-}
-
-.login-subtitulo {
-  margin: 0 0 18px;
   font-size: 14px;
-  font-weight: 600;
   text-align: center;
+  color: #64748b;
+  margin-top: 8px;
+  margin-bottom: 30px;
 }
 
-.login-nota {
-  margin: -10px 0 16px;
-  font-size: 12px;
-  color: #71717a;
-  text-align: center;
+/*Subtítulo*/
+.login-subtitulo {
+  font-size: 19px;
+  color: #1e293b;
+  margin-bottom: 25px;
 }
 
+/*Etiquetas*/
 .login-label {
   display: block;
-  margin-bottom: 6px;
-  font-size: 12px;
-  font-weight: 500;
+  font-size: 14px;
+  font-weight: bold;
+  color: #334155;
+  margin-bottom: 8px;
 }
 
+/*Campos*/
 .login-campo {
-  position: relative;
-  margin-bottom: 14px;
+  margin-bottom: 20px;
 }
 
+/*Entradas de texto*/
 .login-campo input {
   width: 100%;
-  box-sizing: border-box;
-  height: 40px;
-  padding: 0 38px 0 34px;
-  border: 1px solid #d4d4d8;
-  border-radius: 4px;
-  font-size: 13px;
-  color: #18181b;
-  background: #ffffff;
-}
-
-.login-campo input::placeholder {
-  color: #a1a1aa;
+  padding: 13px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
 }
 
 .login-campo input:focus {
-  outline: none;
-  border-color: #18181b;
-  box-shadow: 0 0 0 2px rgba(24, 24, 27, 0.12);
+  border-color: #2563eb;
 }
 
-.login-icono {
-  position: absolute;
-  left: 11px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #71717a;
-  display: flex;
-}
-
-.login-ojo {
-  position: absolute;
-  right: 4px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 32px;
-  height: 32px;
-  border: none;
-  background: transparent;
-  color: #52525b;
-  display: grid;
-  place-items: center;
-  cursor: pointer;
-}
-
+/*Recordar usuario*/
 .login-recordar {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin: 2px 0 16px;
-  font-size: 12px;
-  color: #3f3f46;
-  cursor: pointer;
+  font-size: 13px;
+  color: #475569;
+  margin-bottom: 25px;
 }
 
-.login-recordar input {
-  width: 14px;
-  height: 14px;
-  margin: 0;
-  accent-color: #18181b;
-}
-
+/*Botón*/
 .login-boton {
   width: 100%;
-  height: 40px;
+  padding: 13px;
   border: none;
-  border-radius: 4px;
-  background: #0a0a0a;
-  color: #ffffff;
-  font-size: 13px;
-  font-weight: 600;
+  border-radius: 6px;
+  background: #1e3a5f;
+  color: white;
+  font-size: 15px;
+  font-weight: bold;
   cursor: pointer;
 }
 
 .login-boton:hover {
-  background: #27272a;
+  background: #294e7a;
 }
 
-.login-boton:disabled {
-  opacity: 0.6;
-  cursor: wait;
-}
-
-.login-error {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: 12px;
-  padding: 9px 12px;
-  border-radius: 4px;
-  background: #fde2e4;
-  color: #b91c1c;
-  font-size: 12px;
-}
-
-.login-error svg {
-  flex-shrink: 0;
-}
-
+/*Texto de ayuda*/
 .login-ayuda {
-  margin: 18px 0 0;
-  font-size: 11px;
-  color: #52525b;
+  margin-top: 25px;
   text-align: center;
+  font-size: 12px;
+  color: #1a1d21;
+  line-height: 1.5;
 }
 
-/* Tablet del taller: campos y botón más altos para uso táctil (RNF-01) */
-@media (pointer: coarse) {
-  .login-campo input,
-  .login-boton {
-    height: 48px;
-    font-size: 15px;
+/*Adaptación para celulares*/
+@media (max-width: 480px) {
+  .login-tarjeta {
+    padding: 30px 22px;
+  }
+
+  .login-empresa {
+    font-size: 19px;
   }
 }
