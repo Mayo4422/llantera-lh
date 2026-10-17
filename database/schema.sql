@@ -1,9 +1,6 @@
--- =====================================================================
 -- Sistema de Información Web para la Coordinación Operativa
 -- Llantas y Servicios La Huerta
--- Base de datos: llantera_lh  (MySQL 8.0 o superior)
--- 18 tablas: 8 catálogos + 10 de operación, normalizadas a 3FN
--- =====================================================================
+-- Angel
 
 DROP DATABASE IF EXISTS llantera_lh;
 CREATE DATABASE llantera_lh
@@ -11,9 +8,7 @@ CREATE DATABASE llantera_lh
   COLLATE utf8mb4_unicode_ci;
 USE llantera_lh;
 
--- ---------------------------------------------------------------------
 -- CATÁLOGOS
--- ---------------------------------------------------------------------
 
 CREATE TABLE rol (
   id_rol        TINYINT UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -78,9 +73,7 @@ CREATE TABLE forma_pago (
   UNIQUE KEY uq_forma_pago_nombre (nombre)
 ) ENGINE=InnoDB;
 
--- ---------------------------------------------------------------------
 -- OPERACIÓN
--- ---------------------------------------------------------------------
 
 CREATE TABLE usuario (
   id_usuario              INT UNSIGNED     NOT NULL AUTO_INCREMENT,
@@ -245,9 +238,7 @@ CREATE TABLE notificacion_lectura (
   CONSTRAINT fk_lectura_usuario      FOREIGN KEY (id_usuario)      REFERENCES usuario (id_usuario)
 ) ENGINE=InnoDB;
 
--- ---------------------------------------------------------------------
--- DATOS INICIALES DE LOS CATÁLOGOS
--- ---------------------------------------------------------------------
+-- DATOS INICIALES
 
 INSERT INTO rol (id_rol, nombre, descripcion) VALUES
   (1, 'Taller',              'Cambia estatus, registra diagnósticos, solicita piezas y avisa al terminar.'),
@@ -304,7 +295,6 @@ INSERT INTO modelo (id_marca, nombre) VALUES
   (6, 'Hilux'), (7, 'Jetta');
 
 -- Superadministradora inicial
--- usuario: admin  ·  contraseña temporal: Cambiar2026!  (se pide cambiarla en el primer acceso)
 INSERT INTO usuario (nombre_completo, usuario, contrasena_hash, id_rol, activo, debe_cambiar_contrasena) VALUES
   ('Sandra Cortés García', 'admin',
    '$2b$10$4pinDxYaNvPcMk/gJ/7gHuRkADZuDgDneNB8RQo4w/ZzYPbW.Hndq', 3, TRUE, TRUE);
