@@ -8,8 +8,6 @@ CREATE DATABASE llantera_lh
   COLLATE utf8mb4_unicode_ci;
 USE llantera_lh;
 
--- CATÁLOGOS
-
 CREATE TABLE rol (
   id_rol        TINYINT UNSIGNED NOT NULL AUTO_INCREMENT,
   nombre        VARCHAR(30)      NOT NULL,
@@ -73,7 +71,6 @@ CREATE TABLE forma_pago (
   UNIQUE KEY uq_forma_pago_nombre (nombre)
 ) ENGINE=InnoDB;
 
--- OPERACIÓN
 
 CREATE TABLE usuario (
   id_usuario              INT UNSIGNED     NOT NULL AUTO_INCREMENT,
@@ -238,7 +235,7 @@ CREATE TABLE notificacion_lectura (
   CONSTRAINT fk_lectura_usuario      FOREIGN KEY (id_usuario)      REFERENCES usuario (id_usuario)
 ) ENGINE=InnoDB;
 
--- DATOS INICIALES
+---------------------------------------------------------------------------------------------------------------------------------------
 
 INSERT INTO rol (id_rol, nombre, descripcion) VALUES
   (1, 'Taller',              'Cambia estatus, registra diagnósticos, solicita piezas y avisa al terminar.'),
