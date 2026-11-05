@@ -1,53 +1,38 @@
 
-import { Link } from 'react-router-dom';
-
 function Usuarios() {
-  const usuarios = [
-    { id: 1, nombre: 'Juan Pérez', usuario: 'juan', rol: 'Administrador' },
-    { id: 2, nombre: 'Pedro López', usuario: 'pedro', rol: 'Mecánico' },
-    { id: 3, nombre: 'Ana García', usuario: 'ana', rol: 'Cajero' }
-  ];
-
   return (
     <div className="contenedor">
-      <h1>Lista de usuarios</h1>
+      <div className="encabezado-pagina">
+        <div>
+          <h1>Usuarios</h1>
+          <p>Administración de usuarios del sistema</p>
+        </div>
 
-      <Link to="/usuarios/nuevo" className="boton">
-        Nuevo usuario
-      </Link>
+        <button type="button">+ Nuevo usuario</button>
+      </div>
 
-      <table>
-        <thead>
-          <tr>
-            <th>Nombre</th>
-            <th>Usuario</th>
-            <th>Rol</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
+      <div className="tarjeta-tabla">
+        <h3>Lista de usuarios</h3>
 
-        <tbody>
-          {usuarios.map((usuario) => (
-            <tr key={usuario.id}>
-              <td>{usuario.nombre}</td>
-              <td>{usuario.usuario}</td>
-              <td>{usuario.rol}</td>
-              <td>
-                <Link
-                  to={`/usuarios/editar/${usuario.id}`}
-                  className="boton"
-                >
-                  Editar
-                </Link>
+        <table>
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Usuario</th>
+              <th>Rol</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
 
-                <button type="button" className="boton-secundario">
-                  Eliminar
-                </button>
+          <tbody>
+            <tr>
+              <td colSpan="4" className="tabla-vacia">
+                No hay usuarios registrados
               </td>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }
