@@ -3,3 +3,26 @@ node_modules/
 .env.*
 !.env.example
 dist/
+# Dependencias
+node_modules/
+
+# Variables de entorno
+.env
+.env.*
+!.env.example
+
+# Compilaciones
+dist/
+build/
+coverage/
+
+# Archivos temporales
+*.log
+
+# Respaldos de base de datos
+*.sql
+*.dump
+*.bak
+
+# Configuración local
+.vscode/

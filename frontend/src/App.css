@@ -1,5 +1,6 @@
-
-/* ESTILOS GENERALES */
+/* =========================================
+   ESTILOS GENERALES
+========================================= */
 
 * {
   box-sizing: border-box;
@@ -18,7 +19,9 @@ select {
   font-family: inherit;
 }
 
-/* ESTRUCTURA PRINCIPAL */
+/* =========================================
+   ESTRUCTURA PRINCIPAL
+========================================= */
 
 .sistema {
   display: flex;
@@ -31,7 +34,22 @@ select {
   background: #f1f5f9;
 }
 
-/* MENÚ LATERAL */
+.area-trabajo {
+  padding: 30px;
+}
+
+.main-login {
+  padding: 0;
+}
+
+.contenedor {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* =========================================
+   MENÚ LATERAL
+========================================= */
 
 .menu-lateral {
   width: 240px;
@@ -43,7 +61,7 @@ select {
   flex-shrink: 0;
 }
 
-/* LOGOTIPO */
+/* Logotipo */
 
 .menu-logo {
   display: flex;
@@ -68,7 +86,7 @@ select {
   font-weight: bold;
 }
 
-.menu-logo > div:last-child {
+.menu-logo>div:last-child {
   min-width: 0;
 }
 
@@ -86,7 +104,7 @@ select {
   margin-top: 3px;
 }
 
-/* OPCIONES DEL MENÚ */
+/* Opciones */
 
 .menu-titulo {
   color: #94a3b8;
@@ -132,7 +150,9 @@ select {
   padding-top: 15px;
 }
 
-/* BARRA SUPERIOR */
+/* =========================================
+   BARRA SUPERIOR
+========================================= */
 
 .barra-superior {
   height: 70px;
@@ -144,8 +164,6 @@ select {
   gap: 20px;
   border-bottom: 1px solid #e2e8f0;
 }
-
-/* BUSCADOR */
 
 .buscador {
   width: 330px;
@@ -175,7 +193,7 @@ select {
   margin: 0;
 }
 
-/* INFORMACIÓN DEL USUARIO */
+/* Usuario */
 
 .barra-usuario {
   display: flex;
@@ -221,22 +239,9 @@ select {
   white-space: nowrap;
 }
 
-/* ÁREA DE TRABAJO */
-
-.area-trabajo {
-  padding: 30px;
-}
-
-.main-login {
-  padding: 0;
-}
-
-.contenedor {
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-/* ENCABEZADO DE PÁGINAS */
+/* =========================================
+   ENCABEZADOS DE PÁGINA
+========================================= */
 
 .encabezado-pagina {
   display: flex;
@@ -257,7 +262,9 @@ select {
   margin: 0;
 }
 
-/* BOTONES */
+/* =========================================
+   BOTONES GENERALES
+========================================= */
 
 button,
 .boton {
@@ -285,7 +292,61 @@ button:hover,
   background: #475569;
 }
 
-/* TARJETAS */
+.boton-nuevo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #2563eb;
+  color: white;
+  padding: 11px 16px;
+  border-radius: 6px;
+  font-size: 13px;
+}
+
+/* =========================================
+   TARJETAS DE ESTADÍSTICAS
+========================================= */
+
+.estadisticas {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 25px;
+}
+
+.tarjeta-estadistica {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 20px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.tarjeta-estadistica p {
+  margin: 0 0 12px;
+  color: #64748b;
+  font-size: 13px;
+}
+
+.tarjeta-estadistica h2 {
+  margin: 0;
+  color: #172338;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.tarjeta-estadistica svg {
+  color: #2563eb;
+  flex-shrink: 0;
+}
+
+/* =========================================
+   TARJETAS Y TABLAS
+========================================= */
 
 .tarjeta-tabla {
   background: white;
@@ -300,7 +361,24 @@ button:hover,
   font-size: 17px;
 }
 
-/* TABLAS */
+.tabla-encabezado {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.tabla-encabezado h3 {
+  margin: 0 0 6px;
+  font-size: 17px;
+  color: #1e293b;
+}
+
+.tabla-encabezado p {
+  margin: 0;
+  color: #64748b;
+  font-size: 13px;
+}
 
 table {
   width: 100%;
@@ -327,7 +405,118 @@ td {
   padding: 45px;
 }
 
-/* FORMULARIOS */
+/* =========================================
+   FILTROS DE USUARIOS
+========================================= */
+
+.tabla-filtros {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.filtro-busqueda {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  padding: 0 12px;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  background: white;
+}
+
+.filtro-busqueda svg {
+  color: #64748b;
+  flex-shrink: 0;
+}
+
+.filtro-busqueda input {
+  width: 100%;
+  min-width: 0;
+  padding: 12px 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 13px;
+}
+
+.filtro-rol {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 12px;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  background: white;
+}
+
+.filtro-rol svg {
+  color: #64748b;
+  flex-shrink: 0;
+}
+
+.filtro-rol select {
+  padding: 12px 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 13px;
+  color: #475569;
+}
+
+/* Tabla de usuarios */
+
+.tabla-usuarios {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tabla-usuarios th {
+  padding: 14px;
+  background: #f1f5f9;
+  color: #475569;
+  font-size: 12px;
+  text-align: left;
+}
+
+.tabla-usuarios td {
+  padding: 14px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+/* Estado vacío */
+
+.usuarios-vacios {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 45px 15px;
+  text-align: center;
+}
+
+.usuarios-vacios svg {
+  color: #94a3b8;
+  margin-bottom: 12px;
+}
+
+.usuarios-vacios h4 {
+  margin: 0 0 8px;
+  color: #334155;
+  font-size: 15px;
+}
+
+.usuarios-vacios p {
+  margin: 0;
+  color: #94a3b8;
+  font-size: 13px;
+}
+
+/* =========================================
+   FORMULARIOS GENERALES
+========================================= */
 
 .formulario {
   max-width: 500px;
@@ -357,7 +546,168 @@ td {
   margin-top: 15px;
 }
 
-/* DISEÑO RESPONSIVO */
+/* =========================================
+   MODAL DE NUEVO USUARIO
+========================================= */
+
+/* Fondo oscuro */
+
+.modal-fondo {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(15, 23, 42, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 1000;
+}
+
+/* Ventana */
+
+.modal-contenido {
+  width: 100%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+}
+
+/* Encabezado del modal */
+
+.modal-encabezado {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 24px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.modal-encabezado h2 {
+  margin: 0 0 6px;
+  font-size: 20px;
+  color: #1e293b;
+}
+
+.modal-encabezado p {
+  margin: 0;
+  font-size: 13px;
+  color: #64748b;
+}
+
+.modal-cerrar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+  border: none;
+  background: transparent;
+  color: #64748b;
+  cursor: pointer;
+}
+
+.modal-cerrar:hover {
+  background: #f1f5f9;
+  color: #1e293b;
+}
+
+/* Campos */
+
+.modal-cuerpo {
+  padding: 24px;
+}
+
+.campo-formulario {
+  margin-bottom: 20px;
+}
+
+.campo-formulario:last-child {
+  margin-bottom: 0;
+}
+
+.campo-formulario label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 13px;
+  font-weight: bold;
+  color: #334155;
+}
+
+.campo-formulario input,
+.campo-formulario select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  background: white;
+  color: #334155;
+  font-size: 13px;
+  outline: none;
+}
+
+.campo-formulario input:focus,
+.campo-formulario select:focus {
+  border-color: #2563eb;
+}
+
+.campo-formulario input::placeholder {
+  color: #94a3b8;
+}
+
+/* Botones del modal */
+
+.modal-pie {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 20px 24px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.boton-cancelar {
+  background: #f1f5f9;
+  color: #475569;
+  border: 1px solid #e2e8f0;
+  padding: 11px 16px;
+  border-radius: 6px;
+  font-size: 13px;
+}
+
+.boton-cancelar:hover {
+  background: #e2e8f0;
+}
+
+.boton-guardar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 11px 16px;
+  border-radius: 6px;
+  font-size: 13px;
+}
+
+.boton-guardar:hover {
+  background: #1d4ed8;
+}
+
+/* =========================================
+   DISEÑO RESPONSIVO
+========================================= */
+
+@media (max-width: 1100px) {
+  .estadisticas {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
 
 @media (max-width: 700px) {
   .sistema {
@@ -393,4 +743,100 @@ td {
     flex-direction: column;
     align-items: flex-start;
   }
+
+  .estadisticas {
+    grid-template-columns: 1fr;
+  }
+
+  .tabla-filtros {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filtro-rol {
+    width: 100%;
+  }
+
+  .filtro-rol select {
+    flex: 1;
+  }
+
+  .boton-nuevo {
+    width: 100%;
+  }
+
+  .tabla-usuarios {
+    min-width: 600px;
+  }
+}
+
+@media (max-width: 500px) {
+
+  .modal-encabezado,
+  .modal-cuerpo {
+    padding: 18px;
+  }
+
+  .modal-pie {
+    padding: 18px;
+    flex-direction: column;
+  }
+
+  .boton-cancelar,
+  .boton-guardar {
+    width: 100%;
+  }
+
+  /* =========================================
+   VISTA DE ROLES
+========================================= */
+
+  .estadisticas-roles {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .tabla-roles {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .tabla-roles th {
+    background: #f1f5f9;
+    color: #475569;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 14px;
+    text-align: left;
+  }
+
+  .tabla-roles td {
+    padding: 16px 14px;
+    border-bottom: 1px solid #e2e8f0;
+    color: #334155;
+    font-size: 13px;
+  }
+
+  .etiqueta-rol {
+    display: inline-block;
+    padding: 7px 12px;
+    background: #eff6ff;
+    color: #1d4ed8;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: bold;
+  }
+
+  @media (max-width: 700px) {
+    .estadisticas-roles {
+      grid-template-columns: 1fr;
+    }
+
+    .tabla-roles {
+      min-width: 550px;
+    }
+  }
+
+
+
+
 }
