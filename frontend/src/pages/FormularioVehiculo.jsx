@@ -1,65 +1,62 @@
 
-import { Link, useParams } from 'react-router-dom';
-
 function FormularioVehiculo() {
-  const { id } = useParams();
-
   return (
-    <div className="contenedor">
-      <h1>{id ? 'Editar vehículo' : 'Registrar vehículo'}</h1>
-
-      <form className="formulario">
-        <label>Marca</label>
-        <select defaultValue="">
-          <option value="">Seleccionar marca</option>
-          <option>Nissan</option>
-          <option>Toyota</option>
-          <option>Chevrolet</option>
-          <option>Ford</option>
-          <option>Volkswagen</option>
+    <>
+      <div className="campo-formulario">
+        <label htmlFor="vehiculo-cliente">
+          Cliente
+        </label>
+        <select id="vehiculo-cliente" defaultValue="">
+          <option value="" disabled>
+            Seleccionar cliente
+          </option>
         </select>
+      </div>
 
-        <label>Modelo</label>
-        <input
-          type="text"
-          placeholder="Modelo del vehículo"
-        />
+      <div className="campo-formulario">
+        <label htmlFor="vehiculo-marca">
+          Marca
+        </label>
+        <select id="vehiculo-marca" defaultValue="">
+          <option value="" disabled>
+            Seleccionar marca
+          </option>
+        </select>
+      </div>
 
-        <label>Año</label>
+      <div className="campo-formulario">
+        <label htmlFor="vehiculo-modelo">
+          Modelo
+        </label>
+        <select id="vehiculo-modelo" defaultValue="">
+          <option value="" disabled>
+            Seleccionar modelo
+          </option>
+        </select>
+      </div>
+
+      <div className="campo-formulario">
+        <label htmlFor="vehiculo-anio">
+          Año
+        </label>
         <input
+          id="vehiculo-anio"
           type="number"
           placeholder="Año del vehículo"
         />
+      </div>
 
-        <label>Placas</label>
+      <div className="campo-formulario">
+        <label htmlFor="vehiculo-placa">
+          Placa
+        </label>
         <input
+          id="vehiculo-placa"
           type="text"
-          placeholder="Número de placas"
+          placeholder="Placa del vehículo"
         />
-
-        <label>Color</label>
-        <input
-          type="text"
-          placeholder="Color del vehículo"
-        />
-
-        <label>Cliente</label>
-        <select defaultValue="">
-          <option value="">Seleccionar cliente</option>
-          <option>Juan Pérez</option>
-          <option>María López</option>
-          <option>Carlos García</option>
-        </select>
-
-        <div className="acciones">
-          <button type="button">Guardar</button>
-
-          <Link to="/clientes" className="boton boton-secundario">
-            Cancelar
-          </Link>
-        </div>
-      </form>
-    </div>
+      </div>
+    </>
   );
 }
 

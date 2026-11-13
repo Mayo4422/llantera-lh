@@ -1,40 +1,60 @@
 
-import { Link, useParams } from 'react-router-dom';
-
 function FormularioUsuario() {
-  const { id } = useParams();
-
   return (
-    <div className="contenedor">
-      <h1>{id ? 'Editar usuario' : 'Registrar usuario'}</h1>
+    <>
+      <div className="campo-formulario">
+        <label htmlFor="usuario-nombre">
+          Nombre completo
+        </label>
+        <input
+          id="usuario-nombre"
+          type="text"
+          placeholder="Nombre del empleado"
+        />
+      </div>
 
-      <form className="formulario">
-        <label>Nombre completo</label>
-        <input type="text" placeholder="Nombre completo" />
+      <div className="campo-formulario">
+        <label htmlFor="usuario-login">
+          Nombre de usuario
+        </label>
+        <input
+          id="usuario-login"
+          type="text"
+          placeholder="Usuario para iniciar sesión"
+        />
+      </div>
 
-        <label>Usuario</label>
-        <input type="text" placeholder="Nombre de usuario" />
+      <div className="campo-formulario">
+        <label htmlFor="usuario-contrasena">
+          Contraseña
+        </label>
+        <input
+          id="usuario-contrasena"
+          type="password"
+          placeholder="Ingresa una contraseña"
+        />
+      </div>
 
-        <label>Contraseña</label>
-        <input type="password" placeholder="Contraseña" />
-
-        <label>Rol</label>
-        <select defaultValue="">
-          <option value="">Seleccionar rol</option>
-          <option>Administrador</option>
-          <option>Mecánico</option>
-          <option>Cajero</option>
+      <div className="campo-formulario">
+        <label htmlFor="usuario-rol">
+          Rol
+        </label>
+        <select id="usuario-rol" defaultValue="">
+          <option value="" disabled>
+            Seleccionar rol
+          </option>
+          <option value="administrador">
+            Administrador
+          </option>
+          <option value="mecanico">
+            Mecánico
+          </option>
+          <option value="cajero">
+            Cajero
+          </option>
         </select>
-
-        <div className="acciones">
-          <button type="button">Guardar</button>
-
-          <Link to="/usuarios" className="boton boton-secundario">
-            Cancelar
-          </Link>
-        </div>
-      </form>
-    </div>
+      </div>
+    </>
   );
 }
 

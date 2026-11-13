@@ -1,47 +1,51 @@
 
-import { Link, useParams } from 'react-router-dom';
-
 function FormularioCliente() {
-  const { id } = useParams();
-
   return (
-    <div className="contenedor">
-      <h1>{id ? 'Editar cliente' : 'Registrar cliente'}</h1>
-
-      <form className="formulario">
-        <label>Nombre completo</label>
+    <>
+      <div className="campo-formulario">
+        <label htmlFor="cliente-nombre">
+          Nombre completo
+        </label>
         <input
+          id="cliente-nombre"
           type="text"
           placeholder="Nombre del cliente"
         />
+      </div>
 
-        <label>Teléfono</label>
+      <div className="campo-formulario">
+        <label htmlFor="cliente-telefono">
+          Teléfono
+        </label>
         <input
-          type="text"
+          id="cliente-telefono"
+          type="tel"
           placeholder="Número de teléfono"
         />
+      </div>
 
-        <label>Correo electrónico</label>
+      <div className="campo-formulario">
+        <label htmlFor="cliente-correo">
+          Correo electrónico
+        </label>
         <input
+          id="cliente-correo"
           type="email"
           placeholder="Correo electrónico"
         />
+      </div>
 
-        <label>Dirección</label>
+      <div className="campo-formulario">
+        <label htmlFor="cliente-direccion">
+          Dirección
+        </label>
         <input
+          id="cliente-direccion"
           type="text"
           placeholder="Dirección del cliente"
         />
-
-        <div className="acciones">
-          <button type="button">Guardar</button>
-
-          <Link to="/clientes" className="boton boton-secundario">
-            Cancelar
-          </Link>
-        </div>
-      </form>
-    </div>
+      </div>
+    </>
   );
 }
 

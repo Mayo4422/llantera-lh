@@ -785,56 +785,792 @@ td {
   .boton-cancelar,
   .boton-guardar {
     width: 100%;
-  }
 
-  /* =========================================
+  }
+}
+
+/* =========================================
    VISTA DE ROLES
 ========================================= */
 
+.estadisticas-roles {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.tabla-roles {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tabla-roles th {
+  background: #f1f5f9;
+  color: #475569;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 14px;
+  text-align: left;
+}
+
+.tabla-roles td {
+  padding: 16px 14px;
+  border-bottom: 1px solid #e2e8f0;
+  color: #334155;
+  font-size: 13px;
+}
+
+.etiqueta-rol {
+  display: inline-block;
+  padding: 7px 12px;
+  background: #eff6ff;
+  color: #1d4ed8;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+@media (max-width: 700px) {
   .estadisticas-roles {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: 1fr;
   }
 
   .tabla-roles {
+    min-width: 550px;
+  }
+}
+
+/* =========================================
+   VISTA DE CLIENTES
+========================================= */
+
+.estadisticas-clientes {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.tabla-clientes {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tabla-clientes th {
+  padding: 14px;
+  background: #f1f5f9;
+  color: #475569;
+  font-size: 12px;
+  font-weight: bold;
+  text-align: left;
+}
+
+.tabla-clientes td {
+  padding: 14px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.clientes-vacios {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 45px 15px;
+  text-align: center;
+}
+
+.clientes-vacios svg {
+  color: #94a3b8;
+  margin-bottom: 12px;
+}
+
+.clientes-vacios h4 {
+  margin: 0 0 8px;
+  color: #334155;
+  font-size: 15px;
+}
+
+.clientes-vacios p {
+  margin: 0;
+  color: #94a3b8;
+  font-size: 13px;
+}
+
+@media (max-width: 700px) {
+  .estadisticas-clientes {
+    grid-template-columns: 1fr;
+  }
+
+  .tabla-clientes {
+    min-width: 550px;
+  }
+}
+
+/* =========================================
+   VISTA DE VEHÍCULOS
+========================================= */
+
+.estadisticas-vehiculos {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.tabla-vehiculos {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tabla-vehiculos th {
+  padding: 14px;
+  background: #f1f5f9;
+  color: #475569;
+  font-size: 12px;
+  font-weight: bold;
+  text-align: left;
+}
+
+.tabla-vehiculos td {
+  padding: 14px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.vehiculos-vacios {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 45px 15px;
+  text-align: center;
+}
+
+.vehiculos-vacios svg {
+  color: #94a3b8;
+  margin-bottom: 12px;
+}
+
+.vehiculos-vacios h4 {
+  margin: 0 0 8px;
+  color: #334155;
+  font-size: 15px;
+}
+
+.vehiculos-vacios p {
+  margin: 0;
+  color: #94a3b8;
+  font-size: 13px;
+}
+
+@media (max-width: 700px) {
+  .estadisticas-vehiculos {
+    grid-template-columns: 1fr;
+  }
+
+  .tabla-vehiculos {
+    min-width: 650px;
+  }
+}
+
+/* =========================================
+   PÁGINA NO ENCONTRADA
+========================================= */
+
+.pagina-no-encontrada {
+  min-height: 65vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 30px;
+}
+
+.pagina-no-encontrada>svg {
+  color: #94a3b8;
+  margin-bottom: 15px;
+}
+
+.pagina-no-encontrada h1 {
+  font-size: 72px;
+  margin: 0;
+  color: #2563eb;
+}
+
+.pagina-no-encontrada h2 {
+  font-size: 23px;
+  margin: 10px 0;
+  color: #1e293b;
+}
+
+.pagina-no-encontrada p {
+  font-size: 14px;
+  color: #64748b;
+  max-width: 400px;
+  line-height: 1.6;
+  margin-bottom: 25px;
+}
+
+.pagina-no-encontrada .boton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  text-decoration: none;
+}
+
+@media (max-width: 500px) {
+  .pagina-no-encontrada h1 {
+    font-size: 56px;
+  }
+
+  .pagina-no-encontrada h2 {
+    font-size: 20px;
+  }
+}
+
+/* =========================================
+   ÓRDENES DE SERVICIO
+========================================= */
+
+.tabla-ordenes {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tabla-ordenes th,
+.tabla-ordenes td {
+  padding: 14px 16px;
+  text-align: left;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.tabla-ordenes th {
+  font-size: 13px;
+  font-weight: 600;
+  color: #475569;
+}
+
+.ordenes-vacias {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 45px 20px;
+  color: #64748b;
+}
+
+.ordenes-vacias svg {
+  margin-bottom: 12px;
+  color: #94a3b8;
+}
+
+.ordenes-vacias h4 {
+  margin: 0 0 8px;
+  font-size: 15px;
+  color: #334155;
+}
+
+.ordenes-vacias p {
+  margin: 0;
+  font-size: 13px;
+}
+
+.campo-formulario textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font: inherit;
+  resize: vertical;
+  box-sizing: border-box;
+}
+
+.campo-formulario textarea:focus {
+  outline: none;
+  border-color: #2563eb;
+}
+
+/* =========================================
+   ESTRUCTURA PRINCIPAL
+========================================= */
+
+.sistema {
+  display: flex;
+  min-height: 100vh;
+  background: #f1f5f9;
+}
+
+.menu-lateral {
+  width: 250px;
+  min-width: 250px;
+  min-height: 100vh;
+  background: #0f172a;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  padding: 22px 14px;
+  box-sizing: border-box;
+}
+
+.menu-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 8px 25px;
+}
+
+.logo-icono {
+  width: 42px;
+  height: 42px;
+  background: #2563eb;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.menu-logo strong,
+.menu-logo small {
+  display: block;
+}
+
+.menu-logo strong {
+  font-size: 13px;
+}
+
+.menu-logo small {
+  margin-top: 4px;
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+.menu-titulo {
+  padding: 0 12px;
+  font-size: 11px;
+  color: #64748b;
+  letter-spacing: 1px;
+  margin-bottom: 14px;
+}
+
+.menu-lateral nav {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.menu-enlace {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  color: #cbd5e1;
+  text-decoration: none;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: background 0.2s;
+}
+
+.menu-enlace:hover {
+  background: #1e293b;
+  color: #ffffff;
+}
+
+.menu-enlace.activo {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+.menu-inferior {
+  margin-top: auto;
+  padding-top: 25px;
+}
+
+.contenido-principal {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.barra-superior {
+  height: 72px;
+  min-height: 72px;
+  padding: 0 28px;
+  background: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.buscador {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #64748b;
+}
+
+.buscador input {
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 14px;
+  width: 230px;
+}
+
+.barra-usuario {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.usuario-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #dbeafe;
+  color: #1d4ed8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.usuario-info strong,
+.usuario-info small {
+  display: block;
+}
+
+.usuario-info strong {
+  font-size: 13px;
+  color: #0f172a;
+}
+
+.usuario-info small {
+  font-size: 11px;
+  color: #64748b;
+}
+
+.area-trabajo {
+  flex: 1;
+  padding: 28px;
+}
+
+.contenedor {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* =========================================
+   ÓRDENES DE SERVICIO
+========================================= */
+
+.tabla-responsive {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.tabla-ordenes {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 780px;
+}
+
+.tabla-ordenes th,
+.tabla-ordenes td {
+  padding: 14px 16px;
+  text-align: left;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.tabla-ordenes th {
+  font-size: 13px;
+  font-weight: 600;
+  color: #475569;
+}
+
+.ordenes-vacias {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 45px 20px;
+  color: #64748b;
+}
+
+.ordenes-vacias svg {
+  margin-bottom: 12px;
+  color: #94a3b8;
+}
+
+.ordenes-vacias h4 {
+  margin: 0 0 8px;
+  font-size: 15px;
+  color: #334155;
+}
+
+.ordenes-vacias p {
+  margin: 0;
+  font-size: 13px;
+}
+
+.campo-formulario textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font: inherit;
+  resize: vertical;
+  box-sizing: border-box;
+}
+
+.campo-formulario textarea:focus {
+  outline: none;
+  border-color: #2563eb;
+}
+
+/* =========================================
+   PÁGINA 404
+========================================= */
+
+.pagina-no-encontrada {
+  min-height: 65vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 30px;
+}
+
+.pagina-no-encontrada>svg {
+  color: #94a3b8;
+  margin-bottom: 15px;
+}
+
+.pagina-no-encontrada h1 {
+  font-size: 72px;
+  margin: 0;
+  color: #2563eb;
+}
+
+.pagina-no-encontrada h2 {
+  font-size: 23px;
+  margin: 10px 0;
+  color: #1e293b;
+}
+
+.pagina-no-encontrada p {
+  font-size: 14px;
+  color: #64748b;
+  max-width: 400px;
+  line-height: 1.6;
+  margin-bottom: 25px;
+}
+
+.pagina-no-encontrada .boton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  text-decoration: none;
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 900px) {
+  .menu-lateral {
+    width: 210px;
+    min-width: 210px;
+  }
+
+  .area-trabajo {
+    padding: 18px;
+  }
+}
+
+@media (max-width: 650px) {
+  .sistema {
+    flex-direction: column;
+  }
+
+  .menu-lateral {
     width: 100%;
-    border-collapse: collapse;
+    min-width: 0;
+    min-height: auto;
   }
 
-  .tabla-roles th {
-    background: #f1f5f9;
-    color: #475569;
-    font-size: 12px;
-    font-weight: bold;
+  .menu-lateral nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .menu-inferior {
+    margin-top: 10px;
+  }
+
+  .barra-superior {
+    padding: 0 15px;
+  }
+
+  .buscador input {
+    width: 120px;
+  }
+
+  .usuario-info {
+    display: none;
+  }
+}
+
+/* =========================================
+   SOLICITUDES DE PIEZAS
+========================================= */
+
+.tabla-solicitudes {
+  width: 100%;
+  min-width: 780px;
+  border-collapse: collapse;
+}
+
+.tabla-solicitudes th,
+.tabla-solicitudes td {
+  padding: 14px 16px;
+  text-align: left;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.tabla-solicitudes th {
+  font-size: 13px;
+  font-weight: 600;
+  color: #475569;
+  background: #f8fafc;
+}
+
+.solicitudes-vacias {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 45px 20px;
+  color: #64748b;
+}
+
+.solicitudes-vacias svg {
+  margin-bottom: 12px;
+  color: #94a3b8;
+}
+
+.solicitudes-vacias h4 {
+  margin: 0 0 8px;
+  font-size: 15px;
+  color: #334155;
+}
+
+.solicitudes-vacias p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+/* =========================================
+   CONTROL DE ENTREGAS
+========================================= */
+
+
+.entregas-aviso {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px 20px;
+  margin-bottom: 24px;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 10px;
+  color: #1e40af;
+}
+
+.entregas-aviso>svg {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  margin-top: 2px;
+}
+
+.entregas-aviso>div {
+  flex: 1;
+  min-width: 0;
+}
+
+.entregas-aviso strong {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.entregas-aviso p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.tabla-entregas {
+  width: 100%;
+  min-width: 1100px;
+  border-collapse: collapse;
+}
+
+.tabla-entregas th,
+.tabla-entregas td {
+  padding: 14px 16px;
+  text-align: left;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.tabla-entregas th {
+  font-size: 13px;
+  font-weight: 600;
+  color: #475569;
+  background: #f8fafc;
+  white-space: nowrap;
+}
+
+.entregas-vacias {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 50px 20px;
+  color: #64748b;
+}
+
+.entregas-vacias svg {
+  margin-bottom: 12px;
+  color: #94a3b8;
+}
+
+.entregas-vacias h4 {
+  margin: 0 0 8px;
+  font-size: 15px;
+  color: #334155;
+}
+
+.entregas-vacias p {
+  margin: 0;
+  max-width: 380px;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  .entregas-aviso {
     padding: 14px;
-    text-align: left;
   }
-
-  .tabla-roles td {
-    padding: 16px 14px;
-    border-bottom: 1px solid #e2e8f0;
-    color: #334155;
-    font-size: 13px;
-  }
-
-  .etiqueta-rol {
-    display: inline-block;
-    padding: 7px 12px;
-    background: #eff6ff;
-    color: #1d4ed8;
-    border-radius: 6px;
-    font-size: 12px;
-    font-weight: bold;
-  }
-
-  @media (max-width: 700px) {
-    .estadisticas-roles {
-      grid-template-columns: 1fr;
-    }
-
-    .tabla-roles {
-      min-width: 550px;
-    }
-  }
+}
 
 
 

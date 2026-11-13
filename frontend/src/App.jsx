@@ -4,7 +4,6 @@ import {
   Routes,
   Route,
   NavLink,
-  Link,
   useLocation
 } from 'react-router-dom';
 
@@ -13,6 +12,8 @@ import {
   Shield,
   Contact,
   CarFront,
+  ClipboardList,
+  Package,
   LogOut,
   Search,
   Bell
@@ -22,131 +23,204 @@ import Login from './pages/Login';
 import Usuarios from './pages/Usuarios';
 import Roles from './pages/Roles';
 import Clientes from './pages/Clientes';
-import FormularioUsuario from './pages/FormularioUsuario';
-import FormularioCliente from './pages/FormularioCliente';
+import Vehiculos from './pages/Vehiculos';
 import DetalleCliente from './pages/DetalleCliente';
-import FormularioVehiculo from './pages/FormularioVehiculo';
+import OrdenesServicio from './pages/OrdenesServicio';
+import SolicitudesPiezas from './pages/SolicitudesPiezas';
+import ControlEntregas from './pages/ControlEntregas';
+import NoEncontrado from './pages/NoEncontrado';
 
 import './App.css';
 
-function Contenido() {
+function EstructuraSistema() {
   const location = useLocation();
-  const esLogin = location.pathname === '/';
+
+  if (location.pathname === '/') {
+    return <Login />;
+  }
+
+  const enlaces = [
+    {
+      ruta: '/usuarios',
+      nombre: 'Usuarios',
+      icono: Users
+    },
+    {
+      ruta: '/roles',
+      nombre: 'Roles',
+      icono: Shield
+    },
+    {
+      ruta: '/clientes',
+      nombre: 'Clientes',
+      icono: Contact
+    },
+    {
+      ruta: '/vehiculos',
+      nombre: 'Vehículos',
+      icono: CarFront
+    },
+    {
+      ruta: '/ordenes',
+      nombre: 'Órdenes de servicio',
+      icono: ClipboardList
+    },
+    {
+      ruta: '/solicitudes',
+      nombre: 'Solicitudes de piezas',
+      icono: Package
+    },
+    {
+      ruta: '/entregas',
+      nombre: 'Control de entregas',
+      icono: CarFront
+    }
+  ];
 
   return (
-    <div className={esLogin ? '' : 'sistema'}>
+    <div className="sistema">
 
-      {!esLogin && (
-        <aside className="menu-lateral">
+      {/* MENÚ LATERAL */}
 
-          <div className="menu-logo">
-            <div className="logo-icono">LH</div>
+      <aside className="menu-lateral">
 
-            <div>
-              <strong>Llantas y Servicios</strong>
-              <small>La Huerta</small>
-            </div>
+        <div className="menu-logo">
+          <div className="logo-icono">
+            LH
           </div>
 
-          <p className="menu-titulo">MENÚ PRINCIPAL</p>
+          <div>
+            <strong>Llantas y Servicios</strong>
+            <small>La Huerta</small>
+          </div>
+        </div>
 
+        <p className="menu-titulo">
+          MENÚ PRINCIPAL
+        </p>
+
+        <nav>
+          {enlaces.map((enlace) => {
+            const Icono = enlace.icono;
+
+            return (
+              <NavLink
+                key={enlace.ruta}
+                to={enlace.ruta}
+                className={({ isActive }) =>
+                  isActive
+                    ? 'menu-enlace activo'
+                    : 'menu-enlace'
+                }
+              >
+                <Icono size={18} />
+                <span>{enlace.nombre}</span>
+              </NavLink>
+            );
+          })}
+        </nav>
+
+        <div className="menu-inferior">
           <NavLink
-            to="/usuarios"
-            className={({ isActive }) =>
-              isActive ? 'menu-enlace activo' : 'menu-enlace'
-            }
+            to="/"
+            className="menu-enlace"
           >
-            <Users size={18} />
-            Usuarios
+            <LogOut size={18} />
+            <span>Salir</span>
           </NavLink>
+        </div>
 
-          <NavLink
-            to="/roles"
-            className={({ isActive }) =>
-              isActive ? 'menu-enlace activo' : 'menu-enlace'
-            }
-          >
-            <Shield size={18} />
-            Roles
-          </NavLink>
+      </aside>
 
-          <NavLink
-            to="/clientes"
-            className={({ isActive }) =>
-              isActive ? 'menu-enlace activo' : 'menu-enlace'
-            }
-          >
-            <Contact size={18} />
-            Clientes
-          </NavLink>
+      {/* CONTENIDO PRINCIPAL */}
 
-          <NavLink
-            to="/vehiculos/nuevo"
-            className={({ isActive }) =>
-              isActive ? 'menu-enlace activo' : 'menu-enlace'
-            }
-          >
-            <CarFront size={18} />
-            Vehículos
-          </NavLink>
+      <div className="contenido-principal">
 
-          <div className="menu-inferior">
-            <Link to="/" className="menu-enlace">
-              <LogOut size={18} />
-              Salir
-            </Link>
+        <header className="barra-superior">
+
+          <div className="buscador">
+            <Search size={18} />
+            <input
+              type="text"
+              placeholder="Buscar en el sistema..."
+              aria-label="Buscar en el sistema"
+            />
           </div>
 
-        </aside>
-      )}
+          <div className="barra-usuario">
 
-      <div className={esLogin ? '' : 'contenido-principal'}>
+            <Bell size={20} />
 
-        {!esLogin && (
-          <header className="barra-superior">
-
-            <div className="buscador">
-              <Search size={18} />
-
-              <input
-                type="text"
-                placeholder="Buscar clientes, usuarios..."
-              />
+            <div className="usuario-avatar">
+              AD
             </div>
 
-            <div className="barra-usuario">
-              <Bell size={20} className="notificaciones" />
-
-              <div className="usuario-avatar">AD</div>
-
-              <div className="usuario-info">
-                <strong>Administrador</strong>
-                <small>Usuario del sistema</small>
-              </div>
+            <div className="usuario-info">
+              <strong>Administrador</strong>
+              <small>Administrador</small>
             </div>
 
-          </header>
-        )}
+          </div>
 
-        <main className={esLogin ? 'main-login' : 'area-trabajo'}>
+        </header>
+
+        {/* RUTAS */}
+
+        <main className="area-trabajo">
+
           <Routes>
-            <Route path="/" element={<Login />} />
 
-            <Route path="/usuarios" element={<Usuarios />} />
-            <Route path="/usuarios/nuevo" element={<FormularioUsuario />} />
-            <Route path="/usuarios/editar/:id" element={<FormularioUsuario />} />
-            <Route path="/roles" element={<Roles />} />
+            <Route
+              path="/usuarios"
+              element={<Usuarios />}
+            />
 
-            <Route path="/clientes" element={<Clientes />} />
-            <Route path="/clientes/nuevo" element={<FormularioCliente />} />
-            <Route path="/clientes/editar/:id" element={<FormularioCliente />} />
-            <Route path="/clientes/:id" element={<DetalleCliente />} />
+            <Route
+              path="/roles"
+              element={<Roles />}
+            />
 
-            <Route path="/vehiculos/nuevo" element={<FormularioVehiculo />} />
-            <Route path="/vehiculos/editar/:id" element={<FormularioVehiculo />} />
+            <Route
+              path="/clientes"
+              element={<Clientes />}
+            />
+
+            <Route
+              path="/clientes/:id"
+              element={<DetalleCliente />}
+            />
+
+            <Route
+              path="/vehiculos"
+              element={<Vehiculos />}
+            />
+
+            <Route
+              path="/ordenes"
+              element={<OrdenesServicio />}
+            />
+
+            <Route
+              path="/solicitudes"
+              element={<SolicitudesPiezas />}
+            />
+
+            <Route
+              path="/entregas"
+              element={<ControlEntregas />}
+            />
+
+            <Route
+              path="*"
+              element={<NoEncontrado />}
+            />
+
           </Routes>
+
         </main>
+
       </div>
+
     </div>
   );
 }
@@ -154,7 +228,7 @@ function Contenido() {
 function App() {
   return (
     <BrowserRouter>
-      <Contenido />
+      <EstructuraSistema />
     </BrowserRouter>
   );
 }

@@ -1,6 +1,9 @@
 
 import { useState } from 'react';
 
+import Modal from '../components/Modal';
+import FormularioUsuario from './FormularioUsuario';
+
 import {
   Users,
   UserCheck,
@@ -8,17 +11,16 @@ import {
   Shield,
   Search,
   Plus,
-  Filter,
-  X,
-  Save
+  Filter
 } from 'lucide-react';
 
 function Usuarios() {
-
   const [mostrarModal, setMostrarModal] = useState(false);
 
   return (
     <div className="contenedor">
+
+      {}
 
       <div className="encabezado-pagina">
         <div>
@@ -36,7 +38,7 @@ function Usuarios() {
         </button>
       </div>
 
-      {/* TARJETAS DE ESTADÍSTICAS */}
+      {}
 
       <div className="estadisticas">
 
@@ -74,7 +76,7 @@ function Usuarios() {
 
       </div>
 
-      {/* TABLA DE USUARIOS */}
+      {}
 
       <div className="tarjeta-tabla">
 
@@ -84,6 +86,8 @@ function Usuarios() {
             <p>Consulta y administración del personal</p>
           </div>
         </div>
+
+        {}
 
         <div className="tabla-filtros">
 
@@ -98,14 +102,24 @@ function Usuarios() {
           <div className="filtro-rol">
             <Filter size={18} />
             <select defaultValue="todos">
-              <option value="todos">Todos los roles</option>
-              <option value="administrador">Administrador</option>
-              <option value="mecanico">Mecánico</option>
-              <option value="cajero">Cajero</option>
+              <option value="todos">
+                Todos los roles
+              </option>
+              <option value="administrador">
+                Administrador
+              </option>
+              <option value="mecanico">
+                Mecánico
+              </option>
+              <option value="cajero">
+                Cajero
+              </option>
             </select>
           </div>
 
         </div>
+
+        {}
 
         <table className="tabla-usuarios">
           <thead>
@@ -136,118 +150,16 @@ function Usuarios() {
 
       </div>
 
-      {/* VENTANA EMERGENTE */}
+      {}
 
-      {mostrarModal && (
-
-        <div className="modal-fondo">
-
-          <div
-            className="modal-contenido"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="titulo-modal-usuario"
-          >
-
-            <div className="modal-encabezado">
-              <div>
-                <h2 id="titulo-modal-usuario">Nuevo usuario</h2>
-                <p>Ingresa los datos del nuevo usuario</p>
-              </div>
-
-              <button
-                type="button"
-                className="modal-cerrar"
-                aria-label="Cerrar formulario"
-                onClick={() => setMostrarModal(false)}
-              >
-                <X size={20} />
-              </button>
-            </div>
-
-            <div className="modal-cuerpo">
-
-              <div className="campo-formulario">
-                <label htmlFor="nombre-usuario">
-                  Nombre completo
-                </label>
-                <input
-                  id="nombre-usuario"
-                  type="text"
-                  placeholder="Nombre del empleado"
-                />
-              </div>
-
-              <div className="campo-formulario">
-                <label htmlFor="usuario-login">
-                  Nombre de usuario
-                </label>
-                <input
-                  id="usuario-login"
-                  type="text"
-                  placeholder="Usuario para iniciar sesión"
-                />
-              </div>
-
-              <div className="campo-formulario">
-                <label htmlFor="contrasena-usuario">
-                  Contraseña
-                </label>
-                <input
-                  id="contrasena-usuario"
-                  type="password"
-                  placeholder="Ingresa una contraseña"
-                />
-              </div>
-
-              <div className="campo-formulario">
-                <label htmlFor="rol-usuario">
-                  Rol
-                </label>
-                <select id="rol-usuario" defaultValue="">
-                  <option value="" disabled>
-                    Seleccionar rol
-                  </option>
-                  <option value="administrador">
-                    Administrador
-                  </option>
-                  <option value="mecanico">
-                    Mecánico
-                  </option>
-                  <option value="cajero">
-                    Cajero
-                  </option>
-                </select>
-              </div>
-
-            </div>
-
-            <div className="modal-pie">
-
-              <button
-                type="button"
-                className="boton-cancelar"
-                onClick={() => setMostrarModal(false)}
-              >
-                Cancelar
-              </button>
-
-              <button
-                type="button"
-                className="boton-guardar"
-                onClick={() => setMostrarModal(false)}
-              >
-                <Save size={17} />
-                Guardar usuario
-              </button>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      )}
+      <Modal
+        abierto={mostrarModal}
+        titulo="Nuevo usuario"
+        descripcion="Ingresa los datos del nuevo usuario"
+        onCerrar={() => setMostrarModal(false)}
+      >
+        <FormularioUsuario />
+      </Modal>
 
     </div>
   );
