@@ -8,12 +8,14 @@ import {
 } from 'react-router-dom';
 
 import {
+  LayoutDashboard,
   Users,
   Shield,
   Contact,
   CarFront,
   ClipboardList,
   Package,
+  History,
   LogOut,
   Search,
   Bell
@@ -28,9 +30,85 @@ import DetalleCliente from './pages/DetalleCliente';
 import OrdenesServicio from './pages/OrdenesServicio';
 import SolicitudesPiezas from './pages/SolicitudesPiezas';
 import ControlEntregas from './pages/ControlEntregas';
+import PanelPrincipal from './pages/PanelPrincipal';
+import Notificaciones from './pages/Notificaciones';
+import HistorialOrdenes from './pages/HistorialOrdenes';
 import NoEncontrado from './pages/NoEncontrado';
 
 import './App.css';
+
+const gruposMenu = [
+  {
+    titulo: 'GENERAL',
+    enlaces: [
+      {
+        ruta: '/panel',
+        nombre: 'Panel principal',
+        icono: LayoutDashboard
+      }
+    ]
+  },
+  {
+    titulo: 'ADMINISTRACIÓN',
+    enlaces: [
+      {
+        ruta: '/usuarios',
+        nombre: 'Usuarios',
+        icono: Users
+      },
+      {
+        ruta: '/roles',
+        nombre: 'Roles',
+        icono: Shield
+      },
+      {
+        ruta: '/clientes',
+        nombre: 'Clientes',
+        icono: Contact
+      },
+      {
+        ruta: '/vehiculos',
+        nombre: 'Vehículos',
+        icono: CarFront
+      }
+    ]
+  },
+  {
+    titulo: 'OPERACIONES',
+    enlaces: [
+      {
+        ruta: '/ordenes',
+        nombre: 'Órdenes de servicio',
+        icono: ClipboardList
+      },
+      {
+        ruta: '/solicitudes',
+        nombre: 'Solicitudes de piezas',
+        icono: Package
+      },
+      {
+        ruta: '/entregas',
+        nombre: 'Control de entregas',
+        icono: CarFront
+      }
+    ]
+  },
+  {
+    titulo: 'SEGUIMIENTO',
+    enlaces: [
+      {
+        ruta: '/historial',
+        nombre: 'Historial de órdenes',
+        icono: History
+      },
+      {
+        ruta: '/notificaciones',
+        nombre: 'Notificaciones',
+        icono: Bell
+      }
+    ]
+  }
+];
 
 function EstructuraSistema() {
   const location = useLocation();
@@ -39,55 +117,14 @@ function EstructuraSistema() {
     return <Login />;
   }
 
-  const enlaces = [
-    {
-      ruta: '/usuarios',
-      nombre: 'Usuarios',
-      icono: Users
-    },
-    {
-      ruta: '/roles',
-      nombre: 'Roles',
-      icono: Shield
-    },
-    {
-      ruta: '/clientes',
-      nombre: 'Clientes',
-      icono: Contact
-    },
-    {
-      ruta: '/vehiculos',
-      nombre: 'Vehículos',
-      icono: CarFront
-    },
-    {
-      ruta: '/ordenes',
-      nombre: 'Órdenes de servicio',
-      icono: ClipboardList
-    },
-    {
-      ruta: '/solicitudes',
-      nombre: 'Solicitudes de piezas',
-      icono: Package
-    },
-    {
-      ruta: '/entregas',
-      nombre: 'Control de entregas',
-      icono: CarFront
-    }
-  ];
-
   return (
     <div className="sistema">
 
       {/* MENÚ LATERAL */}
 
       <aside className="menu-lateral">
-
         <div className="menu-logo">
-          <div className="logo-icono">
-            LH
-          </div>
+          <div className="logo-icono">LH</div>
 
           <div>
             <strong>Llantas y Servicios</strong>
@@ -95,49 +132,47 @@ function EstructuraSistema() {
           </div>
         </div>
 
-        <p className="menu-titulo">
-          MENÚ PRINCIPAL
-        </p>
+        <nav aria-label="Menú principal">
+          {gruposMenu.map((grupo) => (
+            <div className="grupo-menu" key={grupo.titulo}>
+              <p className="menu-titulo">
+                {grupo.titulo}
+              </p>
 
-        <nav>
-          {enlaces.map((enlace) => {
-            const Icono = enlace.icono;
+              {grupo.enlaces.map((enlace) => {
+                const Icono = enlace.icono;
 
-            return (
-              <NavLink
-                key={enlace.ruta}
-                to={enlace.ruta}
-                className={({ isActive }) =>
-                  isActive
-                    ? 'menu-enlace activo'
-                    : 'menu-enlace'
-                }
-              >
-                <Icono size={18} />
-                <span>{enlace.nombre}</span>
-              </NavLink>
-            );
-          })}
+                return (
+                  <NavLink
+                    key={enlace.ruta}
+                    to={enlace.ruta}
+                    className={({ isActive }) =>
+                      isActive
+                        ? 'menu-enlace activo'
+                        : 'menu-enlace'
+                    }
+                  >
+                    <Icono size={18} />
+                    <span>{enlace.nombre}</span>
+                  </NavLink>
+                );
+              })}
+            </div>
+          ))}
         </nav>
 
         <div className="menu-inferior">
-          <NavLink
-            to="/"
-            className="menu-enlace"
-          >
+          <NavLink to="/" className="menu-enlace">
             <LogOut size={18} />
             <span>Salir</span>
           </NavLink>
         </div>
-
       </aside>
 
       {/* CONTENIDO PRINCIPAL */}
 
       <div className="contenido-principal">
-
         <header className="barra-superior">
-
           <div className="buscador">
             <Search size={18} />
             <input
@@ -148,27 +183,30 @@ function EstructuraSistema() {
           </div>
 
           <div className="barra-usuario">
+            <NavLink
+              to="/notificaciones"
+              className="enlace-notificaciones"
+              aria-label="Ver notificaciones"
+              title="Notificaciones"
+            >
+              <Bell size={20} />
+            </NavLink>
 
-            <Bell size={20} />
-
-            <div className="usuario-avatar">
-              AD
-            </div>
+            <div className="usuario-avatar">AD</div>
 
             <div className="usuario-info">
               <strong>Administrador</strong>
               <small>Administrador</small>
             </div>
-
           </div>
-
         </header>
 
-        {/* RUTAS */}
-
         <main className="area-trabajo">
-
           <Routes>
+            <Route
+              path="/panel"
+              element={<PanelPrincipal />}
+            />
 
             <Route
               path="/usuarios"
@@ -211,16 +249,22 @@ function EstructuraSistema() {
             />
 
             <Route
+              path="/historial"
+              element={<HistorialOrdenes />}
+            />
+
+            <Route
+              path="/notificaciones"
+              element={<Notificaciones />}
+            />
+
+            <Route
               path="*"
               element={<NoEncontrado />}
             />
-
           </Routes>
-
         </main>
-
       </div>
-
     </div>
   );
 }

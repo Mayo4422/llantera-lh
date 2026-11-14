@@ -1,8 +1,23 @@
 
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Login.css';
 
 function Login() {
+  const navigate = useNavigate();
+
+  const [usuario, setUsuario] = useState('');
+  const [contrasena, setContrasena] = useState('');
+  const [recordar, setRecordar] = useState(false);
+
+  const ingresar = (e) => {
+    e.preventDefault();
+
+    // Navegación provisional del prototipo.
+    // Todavía no existe autenticación real.
+    navigate('/panel');
+  };
+
   return (
     <div className="login-pagina">
       <div className="login-tarjeta">
@@ -21,36 +36,66 @@ function Login() {
           Iniciar sesión
         </h2>
 
-        <label className="login-label">Usuario</label>
-        <input
-          className="login-input"
-          type="text"
-          placeholder="Ingresa tu usuario"
-        />
+        <form onSubmit={ingresar}>
 
-        <label className="login-label">Contraseña</label>
-        <input
-          className="login-input"
-          type="password"
-          placeholder="Ingresa tu contraseña"
-        />
+          <label
+            className="login-label"
+            htmlFor="login-usuario"
+          >
+            Usuario
+          </label>
 
-        <label className="login-recordar">
-          <input type="checkbox" />
-          Recordar usuario
-        </label>
+          <input
+            id="login-usuario"
+            className="login-input"
+            type="text"
+            placeholder="Ingresa tu usuario"
+            value={usuario}
+            onChange={(e) => setUsuario(e.target.value)}
+            autoComplete="username"
+            required
+          />
 
-        <button type="button" className="login-boton">
-          Ingresar
-        </button>
+          <label
+            className="login-label"
+            htmlFor="login-contrasena"
+          >
+            Contraseña
+          </label>
+
+          <input
+            id="login-contrasena"
+            className="login-input"
+            type="password"
+            placeholder="Ingresa tu contraseña"
+            value={contrasena}
+            onChange={(e) => setContrasena(e.target.value)}
+            autoComplete="current-password"
+            required
+          />
+
+          <label className="login-recordar">
+            <input
+              type="checkbox"
+              checked={recordar}
+              onChange={(e) => setRecordar(e.target.checked)}
+            />
+            Recordar usuario
+          </label>
+
+          <button
+            type="submit"
+            className="login-boton"
+          >
+            Ingresar
+          </button>
+
+        </form>
 
         <p className="login-ayuda">
-          ¿Olvidaste tu contraseña? Solicítala a la administradora.
+          ¿Olvidaste tu contraseña?
+          Solicítala a la administradora.
         </p>
-
-        <Link className="login-enlace" to="/usuarios">
-          Ver usuarios
-        </Link>
 
       </div>
     </div>
