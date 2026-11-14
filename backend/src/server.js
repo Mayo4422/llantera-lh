@@ -1,13 +1,21 @@
+
 require('dotenv').config();
 
 const express = require('express');
 const cors = require('cors');
 const pool = require('./db/pool');
+const usuariosRoutes = require('./routes/usuarios.routes');
+const authRoutes = require('./routes/auth.routes');
 
 const app = express();
 
-app.use(cors());
-app.use(express.json());
+app.disable('x-powered-by');
+
+app.use(cors({
+  origin: 'http://localhost:5173'
+}));
+
+app.use(express.json({ limit: '20kb' }));
 
 app.get('/api/salud', async (req, res) => {
   try {
@@ -28,6 +36,9 @@ app.get('/api/salud', async (req, res) => {
     });
   }
 });
+
+app.use('/api/auth', authRoutes);
+app.use('/api/usuarios', usuariosRoutes);
 
 const PORT = process.env.PORT || 3000;
 

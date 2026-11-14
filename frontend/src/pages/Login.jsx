@@ -1,27 +1,48 @@
 
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 import './Login.css';
 
 function Login() {
   const navigate = useNavigate();
 
+  const {
+    iniciarSesion,
+    autenticado,
+    cargando
+  } = useAuth();
+
   const [usuario, setUsuario] = useState('');
   const [contrasena, setContrasena] = useState('');
-  const [recordar, setRecordar] = useState(false);
+  const [error, setError] = useState('');
 
-  const ingresar = (e) => {
+  if (autenticado) {
+    return <Navigate to="/panel" replace />;
+  }
+
+  const ingresar = async (e) => {
     e.preventDefault();
+    setError('');
 
-    // Navegación provisional del prototipo.
-    // Todavía no existe autenticación real.
-    navigate('/panel');
+    try {
+      await iniciarSesion(
+        usuario.trim(),
+        contrasena
+      );
+
+      setContrasena('');
+      navigate('/panel', { replace: true });
+    } catch (err) {
+      setError(
+        err.message || 'No se pudo iniciar sesión'
+      );
+    }
   };
 
   return (
     <div className="login-pagina">
       <div className="login-tarjeta">
-
         <div className="login-logo">LH</div>
 
         <h1 className="login-empresa">
@@ -37,7 +58,6 @@ function Login() {
         </h2>
 
         <form onSubmit={ingresar}>
-
           <label
             className="login-label"
             htmlFor="login-usuario"
@@ -53,6 +73,7 @@ function Login() {
             value={usuario}
             onChange={(e) => setUsuario(e.target.value)}
             autoComplete="username"
+            disabled={cargando}
             required
           />
 
@@ -71,32 +92,36 @@ function Login() {
             value={contrasena}
             onChange={(e) => setContrasena(e.target.value)}
             autoComplete="current-password"
+            disabled={cargando}
             required
           />
 
-          <label className="login-recordar">
-            <input
-              type="checkbox"
-              checked={recordar}
-              onChange={(e) => setRecordar(e.target.checked)}
-            />
-            Recordar usuario
-          </label>
+          {error && (
+            <p
+              role="alert"
+              style={{
+                color: '#dc2626',
+                fontSize: '13px',
+                marginTop: '12px'
+              }}
+            >
+              {error}
+            </p>
+          )}
 
           <button
             type="submit"
             className="login-boton"
+            disabled={cargando}
           >
-            Ingresar
+            {cargando ? 'Verificando...' : 'Ingresar'}
           </button>
-
         </form>
 
         <p className="login-ayuda">
           ¿Olvidaste tu contraseña?
-          Solicítala a la administradora.
+          Solicítala al administrador.
         </p>
-
       </div>
     </div>
   );

@@ -4,6 +4,8 @@ import {
   Routes,
   Route,
   NavLink,
+  Navigate,
+  useNavigate,
   useLocation
 } from 'react-router-dom';
 
@@ -21,6 +23,11 @@ import {
   Bell
 } from 'lucide-react';
 
+import {
+  AuthProvider,
+  useAuth
+} from './context/AuthContext';
+import CambiarContrasena from './pages/CambiarContrasena';
 import Login from './pages/Login';
 import Usuarios from './pages/Usuarios';
 import Roles from './pages/Roles';
@@ -54,22 +61,26 @@ const gruposMenu = [
       {
         ruta: '/usuarios',
         nombre: 'Usuarios',
-        icono: Users
+        icono: Users,
+        roles: ['Administrador']
       },
       {
         ruta: '/roles',
         nombre: 'Roles',
-        icono: Shield
+        icono: Shield,
+        roles: ['Administrador']
       },
       {
         ruta: '/clientes',
         nombre: 'Clientes',
-        icono: Contact
+        icono: Contact,
+        roles: ['Administrador', 'Cajero']
       },
       {
         ruta: '/vehiculos',
         nombre: 'Vehículos',
-        icono: CarFront
+        icono: CarFront,
+        roles: ['Administrador', 'Cajero']
       }
     ]
   },
@@ -89,7 +100,8 @@ const gruposMenu = [
       {
         ruta: '/entregas',
         nombre: 'Control de entregas',
-        icono: CarFront
+        icono: CarFront,
+        roles: ['Administrador', 'Cajero']
       }
     ]
   },
@@ -110,169 +122,316 @@ const gruposMenu = [
   }
 ];
 
-function EstructuraSistema() {
+
+function RutaProtegida({ children, roles }) {
+  const { autenticado, usuario } = useAuth();
   const location = useLocation();
 
-  if (location.pathname === '/') {
-    return <Login />;
+  if (!autenticado) {
+    return <Navigate to="/" replace />;
   }
 
+  const requiereCambio =
+    Boolean(usuario?.debe_cambiar_contrasena);
+
+  if (
+    requiereCambio &&
+    location.pathname !== '/cambiar-contrasena'
+  ) {
+    return (
+      <Navigate
+        to="/cambiar-contrasena"
+        replace
+      />
+    );
+  }
+
+  if (
+    !requiereCambio &&
+    location.pathname === '/cambiar-contrasena'
+  ) {
+    return <Navigate to="/panel" replace />;
+  }
+
+  if (roles && !roles.includes(usuario?.rol)) {
+    return <Navigate to="/panel" replace />;
+  }
+
+  return children;
+}
+
+
+function EstructuraSistema() {
+  const {
+    autenticado,
+    usuario,
+    cerrarSesion
+  } = useAuth();
+
+  const navigate = useNavigate();
+
+  const salir = () => {
+    cerrarSesion();
+    navigate('/', { replace: true });
+  };
+
+  const enlacesPermitidos = (enlaces) =>
+    enlaces.filter(
+      (enlace) =>
+        !enlace.roles ||
+        enlace.roles.includes(usuario?.rol)
+    );
+
+  const iniciales = usuario?.nombre_completo
+    ?.trim()
+    .split(/\s+/)
+    .slice(0, 2)
+    .map((parte) => parte[0])
+    .join('')
+    .toUpperCase() || 'US';
+
   return (
-    <div className="sistema">
+    <Routes>
+      <Route
+        path="/"
+        element={<Login />}
+      />
+      <Route
+        path="/cambiar-contrasena"
+        element={
+          <RutaProtegida>
+            <CambiarContrasena />
+          </RutaProtegida>
+        }
+      />
+      <Route
+        path="/*"
+        element={
+          <RutaProtegida>
+            <div className="sistema">
+              <aside className="menu-lateral">
+                <div className="menu-logo">
+                  <div className="logo-icono">LH</div>
 
-      {/* MENÚ LATERAL */}
+                  <div>
+                    <strong>Llantas y Servicios</strong>
+                    <small>La Huerta</small>
+                  </div>
+                </div>
 
-      <aside className="menu-lateral">
-        <div className="menu-logo">
-          <div className="logo-icono">LH</div>
+                <nav aria-label="Menú principal">
+                  {gruposMenu.map((grupo) => {
+                    const enlaces = enlacesPermitidos(
+                      grupo.enlaces
+                    );
 
-          <div>
-            <strong>Llantas y Servicios</strong>
-            <small>La Huerta</small>
-          </div>
-        </div>
-
-        <nav aria-label="Menú principal">
-          {gruposMenu.map((grupo) => (
-            <div className="grupo-menu" key={grupo.titulo}>
-              <p className="menu-titulo">
-                {grupo.titulo}
-              </p>
-
-              {grupo.enlaces.map((enlace) => {
-                const Icono = enlace.icono;
-
-                return (
-                  <NavLink
-                    key={enlace.ruta}
-                    to={enlace.ruta}
-                    className={({ isActive }) =>
-                      isActive
-                        ? 'menu-enlace activo'
-                        : 'menu-enlace'
+                    if (enlaces.length === 0) {
+                      return null;
                     }
+
+                    return (
+                      <div
+                        className="grupo-menu"
+                        key={grupo.titulo}
+                      >
+                        <p className="menu-titulo">
+                          {grupo.titulo}
+                        </p>
+
+                        {enlaces.map((enlace) => {
+                          const Icono = enlace.icono;
+
+                          return (
+                            <NavLink
+                              key={enlace.ruta}
+                              to={enlace.ruta}
+                              className={({ isActive }) =>
+                                isActive
+                                  ? 'menu-enlace activo'
+                                  : 'menu-enlace'
+                              }
+                            >
+                              <Icono size={18} />
+                              <span>
+                                {enlace.nombre}
+                              </span>
+                            </NavLink>
+                          );
+                        })}
+                      </div>
+                    );
+                  })}
+                </nav>
+
+                <div className="menu-inferior">
+                  <button
+                    type="button"
+                    className="menu-enlace"
+                    onClick={salir}
+                    style={{
+                      width: '100%',
+                      border: 'none',
+                      cursor: 'pointer',
+                      textAlign: 'left',
+                      font: 'inherit'
+                    }}
                   >
-                    <Icono size={18} />
-                    <span>{enlace.nombre}</span>
-                  </NavLink>
-                );
-              })}
+                    <LogOut size={18} />
+                    <span>Salir</span>
+                  </button>
+                </div>
+              </aside>
+
+              <div className="contenido-principal">
+                <header className="barra-superior">
+                  <div className="buscador">
+                    <Search size={18} />
+                    <input
+                      type="text"
+                      placeholder="Buscar en el sistema..."
+                      aria-label="Buscar en el sistema"
+                    />
+                  </div>
+
+                  <div className="barra-usuario">
+                    <NavLink
+                      to="/notificaciones"
+                      className="enlace-notificaciones"
+                      aria-label="Ver notificaciones"
+                      title="Notificaciones"
+                    >
+                      <Bell size={20} />
+                    </NavLink>
+
+                    <div className="usuario-avatar">
+                      {iniciales}
+                    </div>
+
+                    <div className="usuario-info">
+                      <strong>
+                        {usuario?.nombre_completo}
+                      </strong>
+                      <small>
+                        {usuario?.rol}
+                      </small>
+                    </div>
+                  </div>
+                </header>
+
+                <main className="area-trabajo">
+                  <Routes>
+                    <Route
+                      path="/panel"
+                      element={<PanelPrincipal />}
+                    />
+
+                    <Route
+                      path="/usuarios"
+                      element={
+                        <RutaProtegida
+                          roles={['Administrador']}
+                        >
+                          <Usuarios />
+                        </RutaProtegida>
+                      }
+                    />
+
+                    <Route
+                      path="/roles"
+                      element={
+                        <RutaProtegida
+                          roles={['Administrador']}
+                        >
+                          <Roles />
+                        </RutaProtegida>
+                      }
+                    />
+
+                    <Route
+                      path="/clientes"
+                      element={
+                        <RutaProtegida
+                          roles={['Administrador', 'Cajero']}
+                        >
+                          <Clientes />
+                        </RutaProtegida>
+                      }
+                    />
+
+                    <Route
+                      path="/clientes/:id"
+                      element={
+                        <RutaProtegida
+                          roles={['Administrador', 'Cajero']}
+                        >
+                          <DetalleCliente />
+                        </RutaProtegida>
+                      }
+                    />
+
+                    <Route
+                      path="/vehiculos"
+                      element={
+                        <RutaProtegida
+                          roles={['Administrador', 'Cajero']}
+                        >
+                          <Vehiculos />
+                        </RutaProtegida>
+                      }
+                    />
+
+                    <Route
+                      path="/ordenes"
+                      element={<OrdenesServicio />}
+                    />
+
+                    <Route
+                      path="/solicitudes"
+                      element={<SolicitudesPiezas />}
+                    />
+
+                    <Route
+                      path="/entregas"
+                      element={
+                        <RutaProtegida
+                          roles={['Administrador', 'Cajero']}
+                        >
+                          <ControlEntregas />
+                        </RutaProtegida>
+                      }
+                    />
+
+                    <Route
+                      path="/historial"
+                      element={<HistorialOrdenes />}
+                    />
+
+                    <Route
+                      path="/notificaciones"
+                      element={<Notificaciones />}
+                    />
+
+                    <Route
+                      path="*"
+                      element={<NoEncontrado />}
+                    />
+                  </Routes>
+                </main>
+              </div>
             </div>
-          ))}
-        </nav>
-
-        <div className="menu-inferior">
-          <NavLink to="/" className="menu-enlace">
-            <LogOut size={18} />
-            <span>Salir</span>
-          </NavLink>
-        </div>
-      </aside>
-
-      {/* CONTENIDO PRINCIPAL */}
-
-      <div className="contenido-principal">
-        <header className="barra-superior">
-          <div className="buscador">
-            <Search size={18} />
-            <input
-              type="text"
-              placeholder="Buscar en el sistema..."
-              aria-label="Buscar en el sistema"
-            />
-          </div>
-
-          <div className="barra-usuario">
-            <NavLink
-              to="/notificaciones"
-              className="enlace-notificaciones"
-              aria-label="Ver notificaciones"
-              title="Notificaciones"
-            >
-              <Bell size={20} />
-            </NavLink>
-
-            <div className="usuario-avatar">AD</div>
-
-            <div className="usuario-info">
-              <strong>Administrador</strong>
-              <small>Administrador</small>
-            </div>
-          </div>
-        </header>
-
-        <main className="area-trabajo">
-          <Routes>
-            <Route
-              path="/panel"
-              element={<PanelPrincipal />}
-            />
-
-            <Route
-              path="/usuarios"
-              element={<Usuarios />}
-            />
-
-            <Route
-              path="/roles"
-              element={<Roles />}
-            />
-
-            <Route
-              path="/clientes"
-              element={<Clientes />}
-            />
-
-            <Route
-              path="/clientes/:id"
-              element={<DetalleCliente />}
-            />
-
-            <Route
-              path="/vehiculos"
-              element={<Vehiculos />}
-            />
-
-            <Route
-              path="/ordenes"
-              element={<OrdenesServicio />}
-            />
-
-            <Route
-              path="/solicitudes"
-              element={<SolicitudesPiezas />}
-            />
-
-            <Route
-              path="/entregas"
-              element={<ControlEntregas />}
-            />
-
-            <Route
-              path="/historial"
-              element={<HistorialOrdenes />}
-            />
-
-            <Route
-              path="/notificaciones"
-              element={<Notificaciones />}
-            />
-
-            <Route
-              path="*"
-              element={<NoEncontrado />}
-            />
-          </Routes>
-        </main>
-      </div>
-    </div>
+          </RutaProtegida>
+        }
+      />
+    </Routes>
   );
 }
 
 function App() {
   return (
     <BrowserRouter>
-      <EstructuraSistema />
+      <AuthProvider>
+        <EstructuraSistema />
+      </AuthProvider>
     </BrowserRouter>
   );
 }
