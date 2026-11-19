@@ -1,4 +1,3 @@
-
 import {
   Shield,
   Users
@@ -8,8 +7,6 @@ function Roles() {
   return (
     <div className="contenedor">
 
-      {/* ENCABEZADO */}
-
       <div className="encabezado-pagina">
         <div>
           <h1>Roles</h1>
@@ -18,8 +15,6 @@ function Roles() {
           </p>
         </div>
       </div>
-
-      {/* ESTADÍSTICAS */}
 
       <div className="estadisticas estadisticas-roles">
 
@@ -40,8 +35,6 @@ function Roles() {
         </div>
 
       </div>
-
-      {/* TABLA DE ROLES */}
 
       <div className="tarjeta-tabla">
 

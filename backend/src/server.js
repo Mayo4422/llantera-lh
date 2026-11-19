@@ -1,4 +1,3 @@
-
 require('dotenv').config();
 
 const express = require('express');
@@ -39,6 +38,22 @@ app.get('/api/salud', async (req, res) => {
 
 app.use('/api/auth', authRoutes);
 app.use('/api/usuarios', usuariosRoutes);
+app.use('/api/catalogos', require('./routes/catalogos.routes'));
+app.use('/api/clientes', require('./routes/clientes.routes'));
+app.use('/api/vehiculos', require('./routes/vehiculos.routes'));
+
+app.use('/api', (req, res) => {
+  res.status(404).json({ ok: false, mensaje: 'Ruta no encontrada' });
+});
+
+app.use((error, req, res, next) => {
+  if (error.type === 'entity.parse.failed') {
+    return res.status(400).json({ ok: false, mensaje: 'JSON inválido' });
+  }
+
+  console.error('Error no controlado:', error);
+  res.status(500).json({ ok: false, mensaje: 'Error interno del servidor' });
+});
 
 const PORT = process.env.PORT || 3000;
 

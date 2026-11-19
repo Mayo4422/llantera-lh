@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 
 import {
@@ -19,8 +18,6 @@ function SolicitudesPiezas() {
     return (
         <div className="contenedor">
 
-            {/* ENCABEZADO */}
-
             <div className="encabezado-pagina">
                 <div>
                     <h1>Solicitudes de piezas</h1>
@@ -39,8 +36,6 @@ function SolicitudesPiezas() {
                     Nueva solicitud
                 </button>
             </div>
-
-            {/* ESTADÍSTICAS */}
 
             <div className="estadisticas">
 
@@ -78,8 +73,6 @@ function SolicitudesPiezas() {
 
             </div>
 
-            {/* TABLA DE SOLICITUDES */}
-
             <div className="tarjeta-tabla">
 
                 <div className="tabla-encabezado">
@@ -91,8 +84,6 @@ function SolicitudesPiezas() {
                         </p>
                     </div>
                 </div>
-
-                {/* FILTROS */}
 
                 <div className="tabla-filtros">
 
@@ -123,8 +114,6 @@ function SolicitudesPiezas() {
                     </div>
 
                 </div>
-
-                {/* TABLA */}
 
                 <div className="tabla-responsive">
                     <table className="tabla-solicitudes">
@@ -166,8 +155,6 @@ function SolicitudesPiezas() {
                 </div>
 
             </div>
-
-            {/* FORMULARIO EMERGENTE */}
 
             <Modal
                 abierto={mostrarModal}

@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 
 import {
@@ -18,8 +17,6 @@ function ControlEntregas() {
   return (
     <div className="contenedor">
 
-      {/* ENCABEZADO */}
-
       <div className="encabezado-pagina">
         <div>
           <h1>Control de entregas</h1>
@@ -29,8 +26,6 @@ function ControlEntregas() {
           </p>
         </div>
       </div>
-
-      {/* ESTADÍSTICAS */}
 
       <div className="estadisticas">
 
@@ -68,8 +63,6 @@ function ControlEntregas() {
 
       </div>
 
-      {/* INFORMACIÓN OPERATIVA */}
-
       <div className="entregas-aviso">
         <Info size={20} />
 
@@ -84,8 +77,6 @@ function ControlEntregas() {
         </div>
       </div>
 
-      {/* TABLA */}
-
       <div className="tarjeta-tabla">
 
         <div className="tabla-encabezado">
@@ -97,8 +88,6 @@ function ControlEntregas() {
             </p>
           </div>
         </div>
-
-        {/* FILTROS */}
 
         <div className="tabla-filtros">
 
@@ -135,8 +124,6 @@ function ControlEntregas() {
           </div>
 
         </div>
-
-        {/* REGISTROS */}
 
         <div className="tabla-responsive">
 

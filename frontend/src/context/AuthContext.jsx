@@ -1,6 +1,6 @@
-
 import {
   createContext,
+  useCallback,
   useContext,
   useState
 } from 'react';
@@ -13,7 +13,6 @@ export function AuthProvider({ children }) {
   const [sesion, setSesion] = useState(null);
   const [cargando, setCargando] = useState(false);
 
-  // Iniciar sesión con el backend
   const iniciarSesion = async (usuario, contrasena) => {
     setCargando(true);
 
@@ -58,12 +57,44 @@ export function AuthProvider({ children }) {
     }
   };
 
-  // Cerrar sesión
-  const cerrarSesion = () => {
+  const cerrarSesion = useCallback(() => {
     setSesion(null);
-  };
+  }, []);
 
-  // Actualizar los datos del usuario autenticado
+  const token = sesion?.token || null;
+
+  const peticion = useCallback(
+    async (ruta, { method = 'GET', body } = {}) => {
+      const respuesta = await fetch(`${API_URL}/api${ruta}`, {
+        method,
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        body: body === undefined ? undefined : JSON.stringify(body)
+      });
+
+      let datos;
+
+      try {
+        datos = await respuesta.json();
+      } catch {
+        throw new Error('Respuesta inválida del servidor');
+      }
+
+      if (respuesta.status === 401) {
+        setSesion(null);
+      }
+
+      if (!respuesta.ok || !datos.ok) {
+        throw new Error(datos.mensaje || 'Error al consultar el servidor');
+      }
+
+      return datos;
+    },
+    [token]
+  );
+
   const actualizarUsuario = (cambios) => {
     setSesion((anterior) => {
       if (!anterior) {
@@ -90,7 +121,8 @@ export function AuthProvider({ children }) {
         cargando,
         iniciarSesion,
         cerrarSesion,
-        actualizarUsuario
+        actualizarUsuario,
+        peticion
       }}
     >
       {children}
@@ -98,7 +130,7 @@ export function AuthProvider({ children }) {
   );
 }
 
-// Hook para acceder a la autenticación
+// eslint-disable-next-line react-refresh/only-export-components
 export function useAuth() {
   const contexto = useContext(AuthContext);
 

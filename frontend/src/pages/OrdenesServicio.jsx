@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 
 import {
@@ -41,8 +40,6 @@ function OrdenesServicio() {
         </button>
       </div>
 
-      {/* ESTADÍSTICAS */}
-
       <div className="estadisticas">
 
         <div className="tarjeta-estadistica">
@@ -78,8 +75,6 @@ function OrdenesServicio() {
         </div>
 
       </div>
-
-      {/* TABLA */}
 
       <div className="tarjeta-tabla">
 
@@ -163,8 +158,6 @@ function OrdenesServicio() {
         </div>
 
       </div>
-
-      {/* MODAL */}
 
       <Modal
         abierto={mostrarModal}

@@ -1,4 +1,3 @@
-
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const pool = require('../db/pool');
@@ -27,6 +26,7 @@ const iniciarSesion = async (req, res) => {
          u.contrasena_hash,
          u.activo,
          u.debe_cambiar_contrasena,
+         u.version_token,
          r.nombre AS rol
        FROM usuario u
        INNER JOIN rol r ON u.id_rol = r.id_rol
@@ -44,7 +44,7 @@ const iniciarSesion = async (req, res) => {
 
     const usuarioBD = usuarios[0];
 
-    if (!usuarioBD.activo) {
+    if (Number(usuarioBD.activo) !== 1) {
       return res.status(403).json({
         ok: false,
         mensaje: 'Usuario desactivado'
@@ -68,13 +68,20 @@ const iniciarSesion = async (req, res) => {
     }
 
     const token = jwt.sign(
-      { id_usuario: usuarioBD.id_usuario },
+      {
+        id_usuario: usuarioBD.id_usuario,
+        version_token: Number(usuarioBD.version_token)
+      },
       process.env.JWT_SECRET,
-      { expiresIn: process.env.JWT_EXPIRES || '2h' }
+      {
+        expiresIn: process.env.JWT_EXPIRES || '8h'
+      }
     );
 
     await pool.execute(
-      'UPDATE usuario SET ultimo_acceso = NOW() WHERE id_usuario = ?',
+      `UPDATE usuario
+       SET ultimo_acceso = NOW()
+       WHERE id_usuario = ?`,
       [usuarioBD.id_usuario]
     );
 
@@ -91,8 +98,9 @@ const iniciarSesion = async (req, res) => {
           Boolean(usuarioBD.debe_cambiar_contrasena)
       }
     });
+
   } catch (error) {
-    console.error('Error de autenticación:', error.message);
+    console.error('Error de autenticación:', error);
 
     return res.status(500).json({
       ok: false,
@@ -101,4 +109,6 @@ const iniciarSesion = async (req, res) => {
   }
 };
 
-module.exports = { iniciarSesion };
+module.exports = {
+  iniciarSesion
+};

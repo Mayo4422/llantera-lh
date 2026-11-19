@@ -1,16 +1,15 @@
 
 import { useEffect, useId } from 'react';
-
-import {
-  X,
-  Save
-} from 'lucide-react';
+import { X, Save } from 'lucide-react';
 
 function Modal({
   abierto,
   titulo,
   descripcion,
   onCerrar,
+  onGuardar,
+  guardando = false,
+  textoGuardar = 'Guardar',
   children
 }) {
   const tituloId = useId();
@@ -19,7 +18,7 @@ function Modal({
     if (!abierto) return;
 
     function manejarTeclado(event) {
-      if (event.key === 'Escape') {
+      if (event.key === 'Escape' && !guardando) {
         onCerrar();
       }
     }
@@ -29,31 +28,29 @@ function Modal({
     return () => {
       window.removeEventListener('keydown', manejarTeclado);
     };
-  }, [abierto, onCerrar]);
+  }, [abierto, onCerrar, guardando]);
 
-  if (!abierto) {
-    return null;
-  }
+  if (!abierto) return null;
 
   return (
     <div
       className="modal-fondo"
       onMouseDown={(event) => {
-        if (event.target === event.currentTarget) {
+        if (
+          event.target === event.currentTarget &&
+          !guardando
+        ) {
           onCerrar();
         }
       }}
     >
-
       <div
         className="modal-contenido"
         role="dialog"
         aria-modal="true"
         aria-labelledby={tituloId}
       >
-
         <div className="modal-encabezado">
-
           <div>
             <h2 id={tituloId}>{titulo}</h2>
             <p>{descripcion}</p>
@@ -63,11 +60,11 @@ function Modal({
             type="button"
             className="modal-cerrar"
             aria-label="Cerrar formulario"
+            disabled={guardando}
             onClick={onCerrar}
           >
             <X size={20} />
           </button>
-
         </div>
 
         <div className="modal-cuerpo">
@@ -75,28 +72,28 @@ function Modal({
         </div>
 
         <div className="modal-pie">
-
           <button
             type="button"
             className="boton-cancelar"
+            disabled={guardando}
             onClick={onCerrar}
           >
             Cancelar
           </button>
 
-          <button
-            type="button"
-            className="boton-guardar"
-            onClick={onCerrar}
-          >
-            <Save size={17} />
-            Guardar
-          </button>
-
+          {onGuardar && (
+            <button
+              type="button"
+              className="boton-guardar"
+              disabled={guardando}
+              onClick={onGuardar}
+            >
+              <Save size={17} />
+              {guardando ? 'Guardando...' : textoGuardar}
+            </button>
+          )}
         </div>
-
       </div>
-
     </div>
   );
 }

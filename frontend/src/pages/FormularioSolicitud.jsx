@@ -1,9 +1,6 @@
-
 function FormularioSolicitud() {
   return (
     <>
-
-      {/* ORDEN DE SERVICIO */}
 
       <div className="campo-formulario">
         <label htmlFor="solicitud-orden">
@@ -20,8 +17,6 @@ function FormularioSolicitud() {
         </select>
       </div>
 
-      {/* PIEZA O MATERIAL */}
-
       <div className="campo-formulario">
         <label htmlFor="solicitud-pieza">
           Pieza o material solicitado
@@ -33,8 +28,6 @@ function FormularioSolicitud() {
           placeholder="Nombre de la pieza o material"
         />
       </div>
-
-      {/* CANTIDAD */}
 
       <div className="campo-formulario">
         <label htmlFor="solicitud-cantidad">
@@ -48,8 +41,6 @@ function FormularioSolicitud() {
           placeholder="Cantidad solicitada"
         />
       </div>
-
-      {/* OBSERVACIONES */}
 
       <div className="campo-formulario">
         <label htmlFor="solicitud-observaciones">

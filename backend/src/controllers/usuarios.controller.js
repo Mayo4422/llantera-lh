@@ -1,4 +1,3 @@
-
 const pool = require('../db/pool');
 const bcrypt = require('bcrypt');
 
@@ -33,9 +32,11 @@ const responderError = (res, error) => {
 const idValido = (valor) => {
   const numero = Number(valor);
 
-  return Number.isSafeInteger(numero) &&
+  return (
+    Number.isSafeInteger(numero) &&
     numero > 0 &&
-    numero <= 4294967295;
+    numero <= 4294967295
+  );
 };
 
 const validarNombre = (nombre) =>
@@ -87,6 +88,7 @@ const listarUsuarios = async (req, res) => {
       total: usuarios.length,
       usuarios
     });
+
   } catch (error) {
     return responderError(res, error);
   }
@@ -112,7 +114,11 @@ const consultarUsuario = async (req, res) => {
       });
     }
 
-    return res.json({ ok: true, usuario });
+    return res.json({
+      ok: true,
+      usuario
+    });
+
   } catch (error) {
     return responderError(res, error);
   }
@@ -125,20 +131,32 @@ const crearUsuario = async (req, res) => {
       usuario,
       contrasena,
       id_rol
-    } = req.body;
+    } = req.body || {};
 
-    const nombre = nombre_completo?.trim();
-    const nombreUsuario = usuario?.trim();
+    const nombre =
+      typeof nombre_completo === 'string'
+        ? nombre_completo.trim()
+        : '';
+
+    const nombreUsuario =
+      typeof usuario === 'string'
+        ? usuario.trim()
+        : '';
+
     const rol = Number(id_rol);
 
-    if (!validarNombre(nombre) ||
-        !validarUsuario(nombreUsuario) ||
-        !validarContrasena(contrasena) ||
-        !Number.isInteger(rol) ||
-        rol < 1 || rol > 255) {
+    if (
+      !validarNombre(nombre) ||
+      !validarUsuario(nombreUsuario) ||
+      !validarContrasena(contrasena) ||
+      !Number.isInteger(rol) ||
+      rol < 1 ||
+      rol > 255
+    ) {
       return res.status(400).json({
         ok: false,
-        mensaje: 'Datos inválidos. La contraseña debe tener al menos 12 caracteres y no superar 72 bytes'
+        mensaje:
+          'Datos inválidos. Verifica el nombre, usuario, rol y contraseña de al menos 12 caracteres y máximo 72 bytes'
       });
     }
 
@@ -152,8 +170,7 @@ const crearUsuario = async (req, res) => {
     const hash = await bcrypt.hash(contrasena, 12);
 
     const [resultado] = await pool.execute(
-      `INSERT INTO usuario
-       (
+      `INSERT INTO usuario (
          nombre_completo,
          usuario,
          contrasena_hash,
@@ -174,6 +191,7 @@ const crearUsuario = async (req, res) => {
       mensaje: 'Usuario creado correctamente',
       usuario: nuevoUsuario
     });
+
   } catch (error) {
     return responderError(res, error);
   }
@@ -181,8 +199,6 @@ const crearUsuario = async (req, res) => {
 
 const actualizarUsuario = async (req, res) => {
   try {
-    const id = Number(req.params.id);
-
     if (!idValido(req.params.id)) {
       return res.status(400).json({
         ok: false,
@@ -190,6 +206,7 @@ const actualizarUsuario = async (req, res) => {
       });
     }
 
+    const id = Number(req.params.id);
     const actual = await obtenerUsuario(id);
 
     if (!actual) {
@@ -203,16 +220,27 @@ const actualizarUsuario = async (req, res) => {
       nombre_completo,
       usuario,
       id_rol
-    } = req.body;
+    } = req.body || {};
 
-    const nombre = nombre_completo?.trim();
-    const nombreUsuario = usuario?.trim();
+    const nombre =
+      typeof nombre_completo === 'string'
+        ? nombre_completo.trim()
+        : '';
+
+    const nombreUsuario =
+      typeof usuario === 'string'
+        ? usuario.trim()
+        : '';
+
     const rol = Number(id_rol);
 
-    if (!validarNombre(nombre) ||
-        !validarUsuario(nombreUsuario) ||
-        !Number.isInteger(rol) ||
-        rol < 1 || rol > 255) {
+    if (
+      !validarNombre(nombre) ||
+      !validarUsuario(nombreUsuario) ||
+      !Number.isInteger(rol) ||
+      rol < 1 ||
+      rol > 255
+    ) {
       return res.status(400).json({
         ok: false,
         mensaje: 'Los datos del usuario son inválidos'
@@ -226,8 +254,10 @@ const actualizarUsuario = async (req, res) => {
       });
     }
 
-    if (id === req.usuario.id_usuario &&
-        rol !== actual.id_rol) {
+    if (
+      id === Number(req.usuario.id_usuario) &&
+      rol !== Number(actual.id_rol)
+    ) {
       return res.status(403).json({
         ok: false,
         mensaje: 'No puedes cambiar tu propio rol'
@@ -238,9 +268,17 @@ const actualizarUsuario = async (req, res) => {
       `UPDATE usuario
        SET nombre_completo = ?,
            usuario = ?,
+           version_token = version_token +
+             IF(id_rol <> ?, 1, 0),
            id_rol = ?
        WHERE id_usuario = ?`,
-      [nombre, nombreUsuario, rol, id]
+      [
+        nombre,
+        nombreUsuario,
+        rol,
+        rol,
+        id
+      ]
     );
 
     return res.json({
@@ -248,6 +286,7 @@ const actualizarUsuario = async (req, res) => {
       mensaje: 'Usuario actualizado correctamente',
       usuario: await obtenerUsuario(id)
     });
+
   } catch (error) {
     return responderError(res, error);
   }
@@ -255,13 +294,20 @@ const actualizarUsuario = async (req, res) => {
 
 const cambiarEstado = async (req, res) => {
   try {
-    const id = Number(req.params.id);
-
-    if (!idValido(req.params.id) ||
-        typeof req.body.activo !== 'boolean') {
+    if (!idValido(req.params.id)) {
       return res.status(400).json({
         ok: false,
-        mensaje: 'ID o estado inválido'
+        mensaje: 'ID de usuario inválido'
+      });
+    }
+
+    const id = Number(req.params.id);
+    const { activo } = req.body || {};
+
+    if (typeof activo !== 'boolean') {
+      return res.status(400).json({
+        ok: false,
+        mensaje: 'El estado debe ser true o false'
       });
     }
 
@@ -274,8 +320,10 @@ const cambiarEstado = async (req, res) => {
       });
     }
 
-    if (id === req.usuario.id_usuario &&
-        req.body.activo === false) {
+    if (
+      id === Number(req.usuario.id_usuario) &&
+      activo === false
+    ) {
       return res.status(403).json({
         ok: false,
         mensaje: 'No puedes desactivar tu propia cuenta'
@@ -283,17 +331,26 @@ const cambiarEstado = async (req, res) => {
     }
 
     await pool.execute(
-      'UPDATE usuario SET activo = ? WHERE id_usuario = ?',
-      [req.body.activo ? 1 : 0, id]
+      `UPDATE usuario
+       SET version_token = version_token +
+             IF(activo <> ?, 1, 0),
+           activo = ?
+       WHERE id_usuario = ?`,
+      [
+        activo ? 1 : 0,
+        activo ? 1 : 0,
+        id
+      ]
     );
 
     return res.json({
       ok: true,
-      mensaje: req.body.activo
+      mensaje: activo
         ? 'Usuario activado correctamente'
         : 'Usuario desactivado correctamente',
       usuario: await obtenerUsuario(id)
     });
+
   } catch (error) {
     return responderError(res, error);
   }
@@ -301,21 +358,29 @@ const cambiarEstado = async (req, res) => {
 
 const restablecerContrasena = async (req, res) => {
   try {
-    const id = Number(req.params.id);
-    const { contrasena } = req.body;
-
-    if (!idValido(req.params.id) ||
-        !validarContrasena(contrasena)) {
+    if (!idValido(req.params.id)) {
       return res.status(400).json({
         ok: false,
-        mensaje: 'ID o contraseña inválidos'
+        mensaje: 'ID de usuario inválido'
       });
     }
 
-    if (id === req.usuario.id_usuario) {
+    const id = Number(req.params.id);
+    const { contrasena } = req.body || {};
+
+    if (!validarContrasena(contrasena)) {
+      return res.status(400).json({
+        ok: false,
+        mensaje:
+          'La contraseña debe tener al menos 12 caracteres y no superar 72 bytes'
+      });
+    }
+
+    if (id === Number(req.usuario.id_usuario)) {
       return res.status(403).json({
         ok: false,
-        mensaje: 'Utiliza el cambio de contraseña personal para tu propia cuenta'
+        mensaje:
+          'Utiliza el cambio de contraseña personal para tu propia cuenta'
       });
     }
 
@@ -333,15 +398,18 @@ const restablecerContrasena = async (req, res) => {
     await pool.execute(
       `UPDATE usuario
        SET contrasena_hash = ?,
-           debe_cambiar_contrasena = 1
+           debe_cambiar_contrasena = 1,
+           version_token = version_token + 1
        WHERE id_usuario = ?`,
       [hash, id]
     );
 
     return res.json({
       ok: true,
-      mensaje: 'Contraseña restablecida. El usuario deberá cambiarla al iniciar sesión'
+      mensaje:
+        'Contraseña restablecida. El usuario deberá cambiarla al iniciar sesión'
     });
+
   } catch (error) {
     return responderError(res, error);
   }

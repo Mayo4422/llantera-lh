@@ -1,0 +1,19 @@
+Actúa como ingeniero senior full-stack y auditor técnico de este proyecto.
+
+Lee CLAUDE.md y CONTEXTO_CLAUDE/ESTADO_Y_PRUEBAS.md. Inspecciona el código y el esquema SQL real.
+
+FASE 1 — SOLO AUDITORÍA. NO MODIFIQUES ARCHIVOS:
+1. Describe arquitectura y estructura real.
+2. Enumera rutas frontend, endpoints backend y middlewares.
+3. Identifica autorización efectiva por rol en backend.
+4. Documenta tablas, columnas, claves foráneas, índices y relaciones reales.
+5. Compara código con el checklist de pruebas.
+6. Clasifica cada funcionalidad: implementada y probada / implementada no probada / parcial / simulada / faltante / bloqueada.
+7. Detecta riesgos de seguridad, errores, duplicaciones y dependencias.
+8. Propón un plan priorizado para completar Clientes -> Vehículos -> Órdenes -> Solicitudes -> Cobro/Entrega -> Historial/Notificaciones.
+9. Cita rutas y archivos concretos como evidencia.
+
+No ejecutes migraciones ni alteres datos. No supongas que el estado reportado sigue vigente.
+
+FASE 2 — ESPERA MI APROBACIÓN:
+Después de presentar el diagnóstico, espera mi aprobación. Luego trabaja un módulo a la vez, de extremo a extremo. Antes de editar, explica alcance y archivos. Ejecuta pruebas y build. No marques una función como terminada sin evidencia.

@@ -4,7 +4,8 @@ const bcrypt = require('bcrypt');
 
 const cambiarContrasena = async (req, res) => {
   try {
-    const { contrasenaActual, contrasenaNueva } = req.body;
+    const { contrasenaActual, contrasenaNueva } =
+      req.body || {};
 
     if (
       typeof contrasenaActual !== 'string' ||
@@ -14,14 +15,16 @@ const cambiarContrasena = async (req, res) => {
     ) {
       return res.status(400).json({
         ok: false,
-        mensaje: 'La nueva contraseña debe tener al menos 12 caracteres y no superar 72 bytes'
+        mensaje:
+          'La nueva contraseña debe tener al menos 12 caracteres y no superar 72 bytes'
       });
     }
 
     if (contrasenaActual === contrasenaNueva) {
       return res.status(400).json({
         ok: false,
-        mensaje: 'La nueva contraseña debe ser diferente de la actual'
+        mensaje:
+          'La nueva contraseña debe ser diferente de la actual'
       });
     }
 
@@ -51,22 +54,44 @@ const cambiarContrasena = async (req, res) => {
       });
     }
 
-    const nuevoHash = await bcrypt.hash(contrasenaNueva, 12);
+    const nuevoHash = await bcrypt.hash(
+      contrasenaNueva,
+      12
+    );
 
-    await pool.execute(
+    const [resultado] = await pool.execute(
       `UPDATE usuario
        SET contrasena_hash = ?,
-           debe_cambiar_contrasena = 0
-       WHERE id_usuario = ?`,
-      [nuevoHash, req.usuario.id_usuario]
+           debe_cambiar_contrasena = 0,
+           version_token = version_token + 1
+       WHERE id_usuario = ?
+         AND activo = 1
+         AND contrasena_hash = ?`,
+      [
+        nuevoHash,
+        req.usuario.id_usuario,
+        filas[0].contrasena_hash
+      ]
     );
+
+    if (resultado.affectedRows !== 1) {
+      return res.status(409).json({
+        ok: false,
+        mensaje:
+          'La contraseña fue modificada durante esta operación. Inicia sesión nuevamente.'
+      });
+    }
 
     return res.json({
       ok: true,
-      mensaje: 'Contraseña actualizada correctamente'
+      mensaje:
+        'Contraseña actualizada correctamente. Inicia sesión nuevamente.'
     });
   } catch (error) {
-    console.error('Error al cambiar contraseña:', error);
+    console.error(
+      'Error al cambiar contraseña:',
+      error
+    );
 
     return res.status(500).json({
       ok: false,
@@ -75,4 +100,6 @@ const cambiarContrasena = async (req, res) => {
   }
 };
 
-module.exports = { cambiarContrasena };
+module.exports = {
+  cambiarContrasena
+};

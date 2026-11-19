@@ -1,4 +1,3 @@
-
 import {
   BrowserRouter,
   Routes,
@@ -122,7 +121,6 @@ const gruposMenu = [
   }
 ];
 
-
 function RutaProtegida({ children, roles }) {
   const { autenticado, usuario } = useAuth();
   const location = useLocation();
@@ -160,10 +158,8 @@ function RutaProtegida({ children, roles }) {
   return children;
 }
 
-
 function EstructuraSistema() {
   const {
-    autenticado,
     usuario,
     cerrarSesion
   } = useAuth();
